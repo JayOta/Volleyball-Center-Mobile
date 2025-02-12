@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:navbar/login.dart';
-import 'package:navbar/navigationBar.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -15,30 +14,27 @@ class _NavbarState extends State<Navbar> {
     return Scaffold(
       body: Container(
         width: 1366,
-        height: 60,
-        color: Color.fromARGB(255, 248, 202, 1),
+        height: 70,
+        decoration: BoxDecoration(color: Color(0xFF14276b)),
         child: Center(
           // Centralizando o texto dentro do Container
           child: Row(
             children: [
-              SizedBox(width: 5),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => NavigationBarFile()));
-                  },
-                  style: ButtonStyle(),
-                  child: Image.asset("images/menu.png", width: 30, height: 40)),
-              SizedBox(width: 10),
-              Image.asset("images/logo-volei.png", width: 44, height: 44),
+              SizedBox(width: 20),
+              Image.asset("images/logo.png", width: 80, height: 80),
               SizedBox(width: 10),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [textCreator("Volleyball"), textCreator("Center")],
               ),
-              SizedBox(width: 120),
-              buttonCreator("Login", context)
+              SizedBox(width: 150),
+              Image.asset(
+                "images/bell.png",
+                color: Colors.white,
+                width: 44,
+                height: 44,
+              ),
             ],
           ),
         ),
@@ -82,7 +78,7 @@ class _NavbarState extends State<Navbar> {
     return Text(
       text,
       textDirection: TextDirection.ltr,
-      style: TextStyle(fontSize: 13.5, color: Colors.blue.shade300),
+      style: TextStyle(fontSize: 15, color: Colors.white),
     );
   }
 }
