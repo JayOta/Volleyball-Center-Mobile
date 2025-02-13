@@ -120,6 +120,8 @@ class _AppWidgetState extends State<AppWidget> {
 
 // Exemplo de páginas (substitua pelas suas próprias páginas)
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Navbar();

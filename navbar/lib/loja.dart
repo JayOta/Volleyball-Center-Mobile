@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:navbar/menuBar.dart';
 
 class Loja extends StatefulWidget {
   const Loja({super.key});
