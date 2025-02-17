@@ -60,19 +60,6 @@ class _AppWidgetState extends State<AppWidget> {
   }
 }
 
-class BodyPage extends StatelessWidget {
-  const BodyPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Home Page"),
-      ),
-    );
-  }
-}
-
 // Exemplo de páginas (substitua pelas suas próprias páginas)
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
