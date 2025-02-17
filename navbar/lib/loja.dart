@@ -10,7 +10,16 @@ class Loja extends StatefulWidget {
 class _LojaState extends State<Loja> {
   @override
   Widget build(BuildContext context) {
-    return Text('Oi');
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Text("Loja"),
+          )
+        ],
+      ),
+    );
   }
 
   Text textCreator(String text) {

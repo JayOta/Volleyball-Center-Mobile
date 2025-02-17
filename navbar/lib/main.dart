@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:navbar/fundamentos.dart';
 import 'package:navbar/login.dart';
 import 'package:navbar/loja.dart';
+import 'package:navbar/menuBar.dart';
 import 'package:navbar/navbar.dart';
 import 'package:navbar/noticias.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AppWidget(title: ''), // Ajuste aqui
+      home: AppWidget(title: 'Volleyball Center'), // Ajuste aqui
     );
   }
 }
@@ -31,58 +32,54 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
-  int _selectedIndex = 2;
+  int _currentIndex = 2; // Página inicial padrão
 
-  // Lista de páginas correspondentes a cada índice do NavigationBar
   final List<Widget> _pages = [
     Fundamentos(),
-    Noticias(), // Página de fundamentos
-    HomePage(), // Página inicial
-    Loja(), // Página da loja
-    Login(), // Página de notícias
+    Noticias(),
+    HomePage(),
+    Loja(),
+    Login(),
   ];
+
+  void _onItemSelected(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex], // Exibe a página correspondente ao índice
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        backgroundColor: Color(0xFF14276b), // Cor de fundo do NavigationBar
-        destinations: [
-          NavigationDestination(
-            icon: Image.asset("images/vector.png", width: 30, height: 30),
-            selectedIcon: Icon(Icons.home, color: Colors.white),
-            label: "Fundamentos",
-          ),
-          NavigationDestination(
-            icon: Image.asset("images/notices.png", width: 30, height: 30),
-            selectedIcon: Icon(Icons.info, color: Colors.white),
-            label: "Notícias",
-          ),
-          NavigationDestination(
-            icon: Image.asset("images/home.png", width: 30, height: 30),
-            selectedIcon: Icon(Icons.notifications, color: Colors.white),
-            label: "Início",
-          ),
-          NavigationDestination(
-            icon: Image.asset("images/loja.png", width: 30, height: 30),
-            selectedIcon: Icon(Icons.shopping_cart, color: Colors.white),
-            label: "Loja",
-          ),
-          NavigationDestination(
-            icon: Image.asset("images/perfil.png", width: 30, height: 30),
-            selectedIcon: Icon(Icons.shopping_cart, color: Colors.white),
-            label: "Login",
-          ),
-        ],
+      appBar: const Navbar(),
+      body: Center(
+        child: _pages[_currentIndex],
+      ), // Exibe a página selecionada
+      bottomNavigationBar: MenuBarFile(onItemSelected: _onItemSelected),
+    );
+  }
+}
+
+class BodyPage extends StatelessWidget {
+  const BodyPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text("Home Page"),
       ),
     );
+  }
+}
+
+// Exemplo de páginas (substitua pelas suas próprias páginas)
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text("Home Page");
   }
 
   Text textCreator(String text) {
@@ -115,15 +112,5 @@ class _AppWidgetState extends State<AppWidget> {
             color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400),
       ),
     );
-  }
-}
-
-// Exemplo de páginas (substitua pelas suas próprias páginas)
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Navbar();
   }
 }

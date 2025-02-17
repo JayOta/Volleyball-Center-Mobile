@@ -10,7 +10,16 @@ class Fundamentos extends StatefulWidget {
 class _FundamentosState extends State<Fundamentos> {
   @override
   Widget build(BuildContext context) {
-    return Text('Oi');
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Text("Fundamentos"),
+          )
+        ],
+      ),
+    );
   }
 
   Text textCreator(String text) {

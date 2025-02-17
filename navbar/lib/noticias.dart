@@ -10,7 +10,16 @@ class Noticias extends StatefulWidget {
 class _NoticiasState extends State<Noticias> {
   @override
   Widget build(BuildContext context) {
-    return Text('Oi');
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Text("Notícias"),
+          )
+        ],
+      ),
+    );
   }
 
   Text textCreator(String text) {
