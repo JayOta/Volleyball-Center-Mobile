@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:navbar/main.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -49,6 +48,25 @@ class Login extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            height: 30,
+          ),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                linha(Colors.black),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('Ou fazer login com'),
+                SizedBox(
+                  width: 5,
+                ),
+                linha(Colors.black),
+              ],
+            ),
+          )
         ],
       )),
     );
@@ -78,6 +96,14 @@ class Login extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Container linha(Color cor) {
+    return Container(
+      width: 100,
+      height: 1,
+      color: cor,
     );
   }
 }
