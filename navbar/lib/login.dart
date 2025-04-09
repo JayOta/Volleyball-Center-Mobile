@@ -11,29 +11,22 @@ class Login extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Positioned(
-            bottom: 80,
+            bottom: 100,
+            left: 10,
             child: SizedBox(
               width: 100,
+              height: 100,
               child: Text(
                 "Login",
                 style: TextStyle(color: Color(0xFF14276B), fontSize: 40),
               ),
             ),
           ),
-          SizedBox(
-            height: 15,
-          ),
-          SizedBox(
-            height: 15,
-          ),
+          SizedBox(height: 30),
           input('Email'),
-          SizedBox(
-            height: 18,
-          ),
+          SizedBox(height: 18),
           input('Senha'),
-          SizedBox(
-            height: 18,
-          ),
+          SizedBox(height: 18),
           SizedBox(
             width: 350,
             height: 50,
@@ -64,6 +57,65 @@ class Login extends StatelessWidget {
                   width: 5,
                 ),
                 linha(Colors.black),
+              ],
+            ),
+          ),
+          SizedBox(height: 20),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                loginIcon(AssetImage('images/google.png')),
+                SizedBox(width: 40),
+                loginIcon(AssetImage('images/facebook.png')),
+                SizedBox(width: 40),
+                loginIcon(AssetImage('images/twitter.png')),
+              ],
+            ),
+          ),
+          SizedBox(height: 40),
+          Center(
+            child: Column(
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Esqueceu a senha?',
+                    style: TextStyle(
+                      color: Color(0xFFFCCE00),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Não fez login ainda?',
+                        style: TextStyle(color: Color(0xFF14276B))),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Cadastre-se',
+                        style: TextStyle(
+                            color: Color(0xFF14276B),
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color(0xFF14276B)),
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  top: 100,
+                  left: 15,
+                  child: Container(
+                    width: 270,
+                    height: 100,
+                    child: Text(
+                      'Volleyball Center',
+                      style: TextStyle(color: Color(0xFF14276B), fontSize: 35),
+                    ),
+                  ),
+                ),
               ],
             ),
           )
@@ -105,5 +157,24 @@ class Login extends StatelessWidget {
       height: 1,
       color: cor,
     );
+  }
+
+  Container loginIcon(AssetImage image) {
+    return Container(
+        width: 65,
+        height: 35,
+        decoration: BoxDecoration(
+            border: Border.all(
+              color: const Color.fromARGB(221, 70, 70, 70),
+              width: 1,
+              style: BorderStyle.solid,
+            ),
+            borderRadius: BorderRadius.circular(5)),
+        child: TextButton(
+          onPressed: () {},
+          child: Image(
+            image: image,
+          ),
+        ));
   }
 }

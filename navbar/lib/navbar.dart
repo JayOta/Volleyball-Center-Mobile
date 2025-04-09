@@ -12,7 +12,7 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
       child: Center(
         child: Row(
           children: [
-            const SizedBox(width: 20),
+            const SizedBox(width: 10),
             Image.asset("images/logo.png", width: 80, height: 80),
             const SizedBox(width: 10),
             Column(
@@ -20,7 +20,7 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [textCreator("Volleyball"), textCreator("Center")],
             ),
-            const SizedBox(width: 150),
+            const SizedBox(width: 175),
             Image.asset(
               "images/bell.png",
               color: Colors.white,
