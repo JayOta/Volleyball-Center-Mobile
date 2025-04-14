@@ -104,12 +104,11 @@ class Login extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(height: 80),
                 Positioned(
-                  top: 100,
-                  left: 15,
-                  child: Container(
+                  child: SizedBox(
                     width: 270,
-                    height: 100,
+                    height: 50,
                     child: Text(
                       'Volleyball Center',
                       style: TextStyle(color: Color(0xFF14276B), fontSize: 35),
@@ -166,7 +165,7 @@ class Login extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border.all(
               color: const Color.fromARGB(221, 70, 70, 70),
-              width: 1,
+              width: 0.5,
               style: BorderStyle.solid,
             ),
             borderRadius: BorderRadius.circular(5)),
