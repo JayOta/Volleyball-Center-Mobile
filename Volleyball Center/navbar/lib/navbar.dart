@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navbar/main.dart';
 
 class Navbar extends StatelessWidget implements PreferredSizeWidget {
   const Navbar({super.key});
@@ -13,7 +14,17 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: [
             const SizedBox(width: 10),
-            Image.asset("images/logo.png", width: 80, height: 80),
+            SizedBox(
+              width: 100,
+              height: 80,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => MyApp()));
+                },
+                child: Image.asset("images/logo.png", width: 80, height: 80),
+              ),
+            ),
             const SizedBox(width: 10),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
