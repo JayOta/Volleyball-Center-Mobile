@@ -10,7 +10,7 @@ class Cadastro extends StatelessWidget {
       appBar: const Navbar(),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+
           children: [
             Positioned(
               bottom: 100,
@@ -20,7 +20,7 @@ class Cadastro extends StatelessWidget {
                 height: 35,
                 child: Text(
                   "Cadastro",
-                  style: TextStyle(color: Color(0xFF14276B), fontSize: 30),
+                  style: TextStyle(color: Color(0xFF14276B), fontSize: 32),
                 ),
               ),
             ),
