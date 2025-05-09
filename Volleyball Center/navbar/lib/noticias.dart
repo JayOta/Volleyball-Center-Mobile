@@ -12,11 +12,12 @@ class _NoticiasState extends State<Noticias> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Text("Notícias"),
-          )
+        SizedBox(height: 20.0,),
+        Center(child: Text("Notícias",
+          style: TextStyle(color: Color(0xFF14276B), fontSize: 25)),),
         ],
       ),
     );

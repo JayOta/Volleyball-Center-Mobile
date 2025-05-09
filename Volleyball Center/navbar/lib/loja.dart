@@ -12,11 +12,12 @@ class _LojaState extends State<Loja> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Text("Loja"),
-          )
+          SizedBox(height: 20.0,),
+          Center(child: Text("Loja",
+              style: TextStyle(color: Color(0xFF14276B), fontSize: 25)),),
         ],
       ),
     );
