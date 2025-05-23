@@ -5,8 +5,12 @@ import 'package:navbar/loja.dart';
 import 'package:navbar/menuBar.dart';
 import 'package:navbar/navbar.dart';
 import 'package:navbar/noticias.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Inicializa o Firebase
   runApp(const MyApp());
 }
 
