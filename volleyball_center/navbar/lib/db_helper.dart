@@ -1,8 +1,8 @@
-import 'package:mysql/mysql.dart';
+//import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'post.dart';
 
-class DBHelper {
+/*class DBHelper {
   static Future<Database> initDb() async {
     final path = join(await getDatabasesPath(), 'posts.db');
     return openDatabase(
@@ -37,3 +37,4 @@ class DBHelper {
     );
   }
 }
+*/
