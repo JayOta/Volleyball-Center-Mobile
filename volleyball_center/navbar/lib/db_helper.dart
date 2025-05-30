@@ -1,4 +1,4 @@
-import 'package:sqflite/sqflite.dart';
+import 'package:mysql/mysql.dart';
 import 'package:path/path.dart';
 import 'post.dart';
 

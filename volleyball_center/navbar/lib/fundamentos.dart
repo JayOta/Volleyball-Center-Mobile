@@ -16,43 +16,53 @@ class _FundamentosState extends State<Fundamentos> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20.0,),
-            Center(child: Text("Fundamentos",
-                style: TextStyle(color: Color(0xFF14276B), fontSize: 25)),
+            SizedBox(
+              height: 20.0,
             ),
-            SizedBox(height: 20.0,),
+            Center(
+              child: Text("Fundamentos",
+                  style: TextStyle(color: Color(0xFF14276B), fontSize: 25)),
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
             container("Saque",
                 "O saque é a ação que inicia cada rally (jogo de pontos) e consiste em lançar a bola por cima do seu corpo e golpeá-la para que ela atravessar a rede e caia na quadra adversária."),
             Center(
-              child: Image(height: 300,
+              child: Image(
+                  height: 300,
                   width: 300,
                   image: AssetImage('images/Saque.jpg')),
             ),
             container("Ataque",
                 "O ataque, é a finalização ofensiva do jogo. O jogador salta e golpeia a bola com a mão ou o braço, com a intenção de marcar um ponto."),
             Center(
-              child: Image(height: 300,
+              child: Image(
+                  height: 300,
                   width: 300,
                   image: AssetImage('images/ataque.jpg')),
             ),
             container("Bloqueio",
                 "O bloqueio é uma técnica defensiva que visa impedir ou dificultar o ataque do adversário. Um ou mais jogadores se posicionam na rede, levantando as mãos para bloquear a passagem da bola."),
             Center(
-              child: Image(height: 300,
+              child: Image(
+                  height: 300,
                   width: 300,
                   image: AssetImage('images/bloqueio.jpg')),
             ),
             container("Levantamento",
                 "O levantamento, ou toque, é uma técnica que consiste em levantar a bola para cima e em um ponto adequado para o ataque do jogador da sua equipe."),
             Center(
-              child: Image(height: 300,
+              child: Image(
+                  height: 300,
                   width: 300,
                   image: AssetImage('images/levantamento2.jpg')),
             ),
             container("Recepção",
                 "A recepção, ou passe, é uma técnica defensiva que visa receber o saque do adversário ou uma bola vinda da quadra contrária e passá-la para um companheiro, geralmente o levantador, para iniciar a jogada ofensiva. "),
             Center(
-              child: Image(height: 300,
+              child: Image(
+                  height: 300,
                   width: 300,
                   image: AssetImage('images/recepcao.jpg')),
             ),
@@ -60,7 +70,6 @@ class _FundamentosState extends State<Fundamentos> {
         ),
       ),
     );
-
   }
 
   Text textCreator(String text) {
@@ -81,14 +90,25 @@ class _FundamentosState extends State<Fundamentos> {
       children: [
         Padding(
           padding: EdgeInsets.only(left: 16.0),
-          child: Text(titulo, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+          child: Text(
+            titulo,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
         ),
-        SizedBox(height: 10.0,),
+        SizedBox(
+          height: 10.0,
+        ),
         Padding(
           padding: EdgeInsets.only(left: 16.0, right: 30.0),
-          child: Text(texto, textAlign: TextAlign.justify, style: TextStyle(fontSize: 14),),
+          child: Text(
+            texto,
+            textAlign: TextAlign.justify,
+            style: TextStyle(fontSize: 14),
+          ),
         ),
-        SizedBox(height: 20.0,),
+        SizedBox(
+          height: 20.0,
+        ),
       ],
     );
   }
