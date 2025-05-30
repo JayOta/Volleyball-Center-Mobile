@@ -27,12 +27,12 @@ class _HomePageState extends State<HomePage> {
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         posts = data.map((json) => Post.fromJson(json)).toList();
-        await DBHelper.insertPosts(posts);
+      //  await DBHelper.insertPosts(posts);
       } else {
-        posts = await DBHelper.getPosts(); // fallback local
+       // posts = await DBHelper.getPosts(); // fallback local
       }
     } catch (e) {
-      posts = await DBHelper.getPosts(); // offline fallback
+     // posts = await DBHelper.getPosts(); // offline fallback
     }
     setState(() {
       isLoading = false;
