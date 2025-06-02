@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'cadastro.dart';
 
 class Login extends StatelessWidget {
@@ -66,11 +68,16 @@ class Login extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                loginIcon(AssetImage('images/google.png')),
+                loginIcon(AssetImage('images/google.png'), 'Google'),
+                ElevatedButton(
+                    onPressed: () {
+                      loginGoogle();
+                    },
+                    child: Text("Login with Google")),
                 SizedBox(width: 40),
-                loginIcon(AssetImage('images/facebook.png')),
+                loginIcon(AssetImage('images/facebook.png'), 'Face'),
                 SizedBox(width: 40),
-                loginIcon(AssetImage('images/twitter.png')),
+                loginIcon(AssetImage('images/twitter.png'), 'Twitter'),
               ],
             ),
           ),
@@ -156,6 +163,38 @@ class Login extends StatelessWidget {
     );
   }
 
+  Future loginGoogle() async {
+    // try {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    if (googleUser == null) {
+      // O usuário cancelou o login
+      return;
+    }
+
+    // Obtenha a autenticação do Google
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    // Verifique se o token de acesso e o ID do token estão disponíveis
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Crie uma instância do FirebaseAuth
+    final UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    final User? user = userCredential.user;
+
+    final String? idToken = await user?.getIdToken();
+
+    if (idToken == null) {
+      // O token de ID não está disponível
+      return;
+    }
+  }
+
   Container linha(Color cor) {
     return Container(
       width: 100,
@@ -164,7 +203,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  Container loginIcon(AssetImage image) {
+  Container loginIcon(AssetImage image, String nome) {
     return Container(
         width: 65,
         height: 35,
@@ -176,7 +215,9 @@ class Login extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(5)),
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            loginGoogle();
+          },
           child: Image(
             image: image,
           ),
