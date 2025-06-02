@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "285077831674",
+    "project_id": "volleyballcenter-57da3",
+    "storage_bucket": "volleyballcenter-57da3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285077831674:android:98826544c93b704b76ee43",
+        "android_client_info": {
+          "package_name": "com.example.projects"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlR56_JzloutL5LKlVdd1NSH7iPLg0Nv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
