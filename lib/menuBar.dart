@@ -27,23 +27,23 @@ class _MenuBarFileState extends State<MenuBarFile> {
       overlayColor: WidgetStatePropertyAll(Colors.amber),
       destinations: [
         NavigationDestination(
-          icon: Image.asset("images/vector.png", width: 30, height: 30),
+          icon: Image.asset("assets/images/vector.png", width: 30, height: 30),
           label: "",
         ),
         NavigationDestination(
-          icon: Image.asset("images/notices.png", width: 30, height: 30),
+          icon: Image.asset("assets/images/notices.png", width: 30, height: 30),
           label: "",
         ),
         NavigationDestination(
-          icon: Image.asset("images/home.png", width: 45, height: 45),
+          icon: Image.asset("assets/images/home.png", width: 45, height: 45),
           label: "",
         ),
         NavigationDestination(
-          icon: Image.asset("images/loja.png", width: 30, height: 30),
+          icon: Image.asset("assets/images/loja.png", width: 30, height: 30),
           label: "",
         ),
         NavigationDestination(
-          icon: Image.asset("images/perfil.png", width: 30, height: 30),
+          icon: Image.asset("assets/images/perfil.png", width: 30, height: 30),
           label: "",
         ),
       ],

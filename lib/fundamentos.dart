@@ -32,7 +32,7 @@ class _FundamentosState extends State<Fundamentos> {
               child: Image(
                   height: 300,
                   width: 300,
-                  image: AssetImage('images/Saque.jpg')),
+                  image: AssetImage('assets/images/Saque.jpg')),
             ),
             container("Ataque",
                 "O ataque, é a finalização ofensiva do jogo. O jogador salta e golpeia a bola com a mão ou o braço, com a intenção de marcar um ponto."),
@@ -40,7 +40,7 @@ class _FundamentosState extends State<Fundamentos> {
               child: Image(
                   height: 300,
                   width: 300,
-                  image: AssetImage('images/ataque.jpg')),
+                  image: AssetImage('assets/images/ataque.jpg')),
             ),
             container("Bloqueio",
                 "O bloqueio é uma técnica defensiva que visa impedir ou dificultar o ataque do adversário. Um ou mais jogadores se posicionam na rede, levantando as mãos para bloquear a passagem da bola."),
@@ -48,7 +48,7 @@ class _FundamentosState extends State<Fundamentos> {
               child: Image(
                   height: 300,
                   width: 300,
-                  image: AssetImage('images/bloqueio.jpg')),
+                  image: AssetImage('assets/images/bloqueio.jpg')),
             ),
             container("Levantamento",
                 "O levantamento, ou toque, é uma técnica que consiste em levantar a bola para cima e em um ponto adequado para o ataque do jogador da sua equipe."),
@@ -56,7 +56,7 @@ class _FundamentosState extends State<Fundamentos> {
               child: Image(
                   height: 300,
                   width: 300,
-                  image: AssetImage('images/levantamento2.jpg')),
+                  image: AssetImage('assets/images/levantamento2.jpg')),
             ),
             container("Recepção",
                 "A recepção, ou passe, é uma técnica defensiva que visa receber o saque do adversário ou uma bola vinda da quadra contrária e passá-la para um companheiro, geralmente o levantador, para iniciar a jogada ofensiva. "),
@@ -64,7 +64,7 @@ class _FundamentosState extends State<Fundamentos> {
               child: Image(
                   height: 300,
                   width: 300,
-                  image: AssetImage('images/recepcao.jpg')),
+                  image: AssetImage('assets/images/recepcao.jpg')),
             ),
           ],
         ),

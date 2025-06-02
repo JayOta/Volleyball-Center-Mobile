@@ -30,9 +30,9 @@ class _LojaState extends State<Loja> {
               mainAxisAlignment: MainAxisAlignment.center,  
               crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              imageAlign('images/bola.jpg', 'images/manguito.jpg'),
+              imageAlign('assets/images/bola.jpg', 'assets/images/manguito.jpg'),
                SizedBox(height: 30,),
-               imageAlign('images/tenis.jpg', 'images/joelheira.jpg'),
+               imageAlign('assets/images/tenis.jpg', 'assets/images/joelheira.jpg'),
                 SizedBox(height: 30,),
                ],
           ),

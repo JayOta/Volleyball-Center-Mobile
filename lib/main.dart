@@ -72,7 +72,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Column(children: [
         Container(
-          color: Color(0xFFFFCCE00),
+          color: Color(0xffffcce00),
           width: double.infinity,
           height: 100,
         ), // Barra amarela
@@ -99,7 +99,7 @@ class HomePage extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image.asset(
-                  'images/jogo-3.jpg',
+                  'assets/images/jogo-3.jpg',
                   width: 330,
                   height: 220,
                   fit: BoxFit.cover,
@@ -159,7 +159,7 @@ class HomePage extends StatelessWidget {
         shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
         side:
-        WidgetStatePropertyAll(BorderSide(color: Colors.white, width: 1.8)),
+            WidgetStatePropertyAll(BorderSide(color: Colors.white, width: 1.8)),
       ),
       child: Text(
         text,

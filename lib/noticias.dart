@@ -61,29 +61,29 @@ class _NoticiasState extends State<Noticias> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Texto do conteúdo
-                  Expanded(
+                  Flexible(  // troque Expanded por Flexible
                     flex: 2,
                     child: Text(
                       "Esse é o conteúdo da notícia. Aqui você escreve o que quiser. Ele vai ficar ao lado da imagem.",
                       style: TextStyle(fontSize: 16),
+                      softWrap: true, // adicione isso
                     ),
                   ),
 
-                  SizedBox(width: 16), // Espaço entre texto e imagem
+                  SizedBox(width: 16),
 
-                  // Imagem
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.asset(
-                      'images/Brasil-x-turquia.jpg', // Sua imagem local
+                      'assets/images/jogo-3.jpg',
                       width: 100,
                       height: 100,
-                      fit: BoxFit.cover,  
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ],
               ),
+
             ],
           ),
         )

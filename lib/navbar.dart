@@ -23,7 +23,7 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => MyApp()));
                 },
-                child: Image.asset("images/logo.png", width: 80, height: 80),
+                child: Image.asset("assets/images/logo.png", width: 80, height: 80),
               ),
             ),
             const SizedBox(width: 10),
@@ -34,7 +34,7 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
             ),
             const SizedBox(width: 175),
             Image.asset(
-              "images/bell.png",
+              "assets/images/bell.png",
               color: Colors.white,
               width: 44,
               height: 44,
