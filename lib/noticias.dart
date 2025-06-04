@@ -49,12 +49,6 @@ class _NoticiasState extends State<Noticias> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Divider(color: Colors.grey),
-              SizedBox(height: 8),
-              Text(
-                "Título da Notícia",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
               SizedBox(height: 12),
 
               // Texto e imagem lado a lado
@@ -64,8 +58,38 @@ class _NoticiasState extends State<Noticias> {
                   Flexible(  // troque Expanded por Flexible
                     flex: 2,
                     child: Text(
-                      "Esse é o conteúdo da notícia. Aqui você escreve o que quiser. Ele vai ficar ao lado da imagem.",
-                      style: TextStyle(fontSize: 16),
+                      "Seleção brasileira de vôlei apresenta novos uniformes para ciclo olímpico de Los Angeles 2028",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      softWrap: true, // adicione isso
+                    ),
+                  ),
+
+                  
+
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'images/uniformeNovo.jpg',
+                      width: 180,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),  
+              SizedBox(height: 20),
+              Divider(color: Colors.grey),
+              SizedBox(height: 12),
+
+              // Texto e imagem lado a lado
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(  // troque Expanded por Flexible
+                    flex: 2,
+                    child: Text(
+                      "Liga das Nações: Zé Roberto incrementa seleção com novos talentos em busca de título inédito",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       softWrap: true, // adicione isso
                     ),
                   ),
@@ -75,15 +99,135 @@ class _NoticiasState extends State<Noticias> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.asset(
-                      'assets/images/jogo-3.jpg',
-                      width: 100,
-                      height: 100,
+                      'images/ze-roberto-guimaraes.webp',
+                      width: 180,
+                      height: 120,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ],
               ),
+              SizedBox(height: 20),
+              Divider(color: Colors.grey),
+              
+              SizedBox(height: 12),
 
+              // Texto e imagem lado a lado
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(  // troque Expanded por Flexible
+                    flex: 2,
+                    child: Text(
+                      "Renovação oficialmente iniciada na seleção masculina volei",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      softWrap: true, // adicione isso
+                    ),
+                  ),
+
+                  SizedBox(width: 16),
+
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'images/brasil-tempo-bernardinho.jpg',
+                      width: 180,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Divider(color: Colors.grey),
+              SizedBox(height: 12),
+
+              // Texto e imagem lado a lado
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(  // troque Expanded por Flexible
+                    flex: 2,
+                    child: Text(
+                      "Brasil inicia ciclo sem Carol, com nova líbero e algumas disputas",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      softWrap: true, // adicione isso
+                    ),
+                  ),
+
+                  SizedBox(width: 16),
+
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'images/carol.jpg',
+                      width: 180,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Divider(color: Colors.grey),
+              SizedBox(height: 12),
+
+              // Texto e imagem lado a lado
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(  // troque Expanded por Flexible
+                    flex: 2,
+                    child: Text(
+                      "Liga das Nações terá duas equipes a mais por naipe em 2025",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      softWrap: true, // adicione isso
+                    ),
+                  ),
+
+                  SizedBox(width: 16),
+
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'images/vnl.jpg',
+                      width: 180,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Divider(color: Colors.grey),
+              SizedBox(height: 12),
+
+              // Texto e imagem lado a lado
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(  // troque Expanded por Flexible
+                    flex: 2,
+                    child: Text(
+                      "Tabela da Liga das Nações de Vôlei (VNL) Feminino 2025",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      softWrap: true, // adicione isso
+                    ),
+                  ),
+
+                  SizedBox(width: 16),
+
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'images/capavnl.jpg',
+                      width: 180,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         )
