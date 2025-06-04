@@ -132,6 +132,26 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          width: 100,
+          child: Row(
+            children: [
+              Image.asset(
+                "assets/images/jogo-3.jpg",
+                width: 200,
+                height: 100,
+              ),
+              Image.asset(
+                "assets/images/jogo-3.jpg",
+                width: 200,
+                height: 100,
+              ),
+            ],
+          ),
         )
       ]),
     );

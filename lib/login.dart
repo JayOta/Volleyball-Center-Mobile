@@ -28,8 +28,7 @@ class Login extends StatelessWidget {
               height: 50,
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                  WidgetStatePropertyAll(Color(0xFF14276B)),
+                  backgroundColor: WidgetStatePropertyAll(Color(0xFF14276B)),
                 ),
                 onPressed: () {},
                 child: Text(
@@ -53,9 +52,11 @@ class Login extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                loginIcon(AssetImage('assets/images/google.png'), 'Google', context),
+                loginIcon(
+                    AssetImage('assets/images/google.png'), "Google", context),
                 SizedBox(width: 20),
-                loginIcon(AssetImage('assets/images/facebook.png'), 'Face', context),
+                loginIcon(
+                    AssetImage('assets/images/facebook.png'), 'Face', context),
               ],
             ),
             SizedBox(height: 40),
@@ -80,8 +81,7 @@ class Login extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => Cadastro()),
+                          MaterialPageRoute(builder: (context) => Cadastro()),
                         );
                       },
                       child: Text(
@@ -138,7 +138,7 @@ class Login extends StatelessWidget {
     if (googleUser == null) return;
 
     final GoogleSignInAuthentication googleAuth =
-    await googleUser.authentication;
+        await googleUser.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
@@ -147,7 +147,7 @@ class Login extends StatelessWidget {
 
     try {
       final UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithCredential(credential);
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
       final User? user = userCredential.user;
       final String? idToken = await user?.getIdToken();
@@ -173,20 +173,36 @@ class Login extends StatelessWidget {
 
   Container loginIcon(AssetImage image, String name, BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(1),
+      padding: const EdgeInsets.all(0),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.white),
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.grey[100],
-
+        color: Color.fromARGB(255, 248, 248, 248),
+        border: Border.all(color: Colors.transparent),
+        borderRadius: BorderRadius.circular(50), // mais arredondado
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12, // sombra suave
+            blurRadius: 10, // suavidade
+            offset: Offset(0, 6), // deslocamento vertical
+          ),
+        ],
       ),
       child: TextButton(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          padding: EdgeInsets.all(20),
+        ),
         onPressed: () {
           if (name == "Google") {
             loginGoogle(context);
           }
         },
-        child: Image(image: image, width: 40, height: 40,),
+        child: Image(
+          image: image,
+          width: 40,
+          height: 30,
+        ),
       ),
     );
   }

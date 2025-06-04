@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'navbar.dart';
+import 'package:volleyball_center_mobile/main.dart';
+import 'package:volleyball_center_mobile/navbar.dart';
 
 class Cadastro extends StatelessWidget {
   const Cadastro({super.key});
@@ -7,45 +8,63 @@ class Cadastro extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const Navbar(),
       body: Center(
-        child: Column(
-
-          children: [
-            Positioned(
-              bottom: 100,
-              left: 20,
-              child: SizedBox(
-                width: 140,
-                height: 35,
-                child: Text(
-                  "Cadastro",
-                  style: TextStyle(color: Color(0xFF14276B), fontSize: 32),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Cadastro",
+                style: TextStyle(color: Color(0xFF14276B), fontSize: 40),
+              ),
+              SizedBox(height: 30),
+              input('Usuário'),
+              SizedBox(height: 18),
+              input('Email'),
+              SizedBox(height: 18),
+              input('Senha'),
+              SizedBox(height: 18),
+              SizedBox(
+                width: 350,
+                height: 50,
+                child: TextButton(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(Color(0xFF14276B)),
+                  ),
+                  onPressed: () {
+                    // Aqui você pode adicionar a lógica de cadastro com Firebase ou outro backend
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyApp()),
+                    );
+                  },
+                  child: Text(
+                    "Cadastrar",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 50),
-            input('Usuário'),
-            SizedBox(height: 18),
-            input('Email'),
-            SizedBox(height: 18),
-            input('Senha'),
-            SizedBox(height: 18),
-            SizedBox(
-              width: 350,
-              height: 50,
-              child: TextButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Color(0xFF14276B)),
-                ),
-                onPressed: () {},
+              SizedBox(height: 30),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Volta para o login
+                },
                 child: Text(
-                  "Cadastrar",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  'Já tem uma conta? Fazer login',
+                  style: TextStyle(
+                    color: Color(0xFF14276B),
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color(0xFF14276B),
+                  ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 50),
+              Text(
+                'Volleyball Center',
+                style: TextStyle(color: Color(0xFF14276B), fontSize: 35),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -55,6 +74,7 @@ class Cadastro extends StatelessWidget {
     return SizedBox(
       width: 350,
       child: TextField(
+        obscureText: placeholder == 'Senha',
         decoration: InputDecoration(
           labelText: placeholder,
           labelStyle: TextStyle(color: Color(0xFF14276B)),
@@ -68,40 +88,10 @@ class Cadastro extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(22),
-            borderSide: BorderSide(
-              color: Color(0xFF14276B),
-              width: 2,
-            ),
+            borderSide: BorderSide(color: Color(0xFF14276B), width: 2),
           ),
         ),
       ),
     );
-  }
-
-  Container linha(Color cor) {
-    return Container(
-      width: 100,
-      height: 1,
-      color: cor,
-    );
-  }
-
-  Container loginIcon(AssetImage image) {
-    return Container(
-        width: 65,
-        height: 35,
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: const Color.fromARGB(221, 70, 70, 70),
-              width: 1,
-              style: BorderStyle.solid,
-            ),
-            borderRadius: BorderRadius.circular(5)),
-        child: TextButton(
-          onPressed: () {},
-          child: Image(
-            image: image,
-          ),
-        ));
   }
 }
