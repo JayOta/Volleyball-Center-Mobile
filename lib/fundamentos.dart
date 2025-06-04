@@ -19,11 +19,25 @@ class _FundamentosState extends State<Fundamentos> {
             SizedBox(
               height: 20.0,
             ),
-            Center(
-              child: Text("Fundamentos",
-                  style: TextStyle(color: Color(0xFF14276B), fontSize: 25)),
+           Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              'Fundamentos',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(
+            
+            Text(
+              'História',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+             Text(
+              'Regra',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ],
+           ),
+                SizedBox(
               height: 20.0,
             ),
             container("Saque",
