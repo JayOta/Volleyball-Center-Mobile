@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:volleyball_center_mobile/main.dart';
-import 'package:volleyball_center_mobile/navbar.dart';
 
 class Cadastro extends StatelessWidget {
   const Cadastro({super.key});
