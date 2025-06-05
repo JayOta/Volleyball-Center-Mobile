@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:volleyball_center_mobile/fundamentos.dart';
 import 'package:volleyball_center_mobile/login.dart';
 import 'package:volleyball_center_mobile/loja.dart';
+import 'package:volleyball_center_mobile/fundamentos.dart';
 import 'package:volleyball_center_mobile/menuBar.dart';
 import 'package:volleyball_center_mobile/navbar.dart';
 import 'package:volleyball_center_mobile/noticias.dart';
+import 'package:volleyball_center_mobile/historia.dart';
+import 'package:volleyball_center_mobile/regras.dart';
 //import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -43,6 +45,8 @@ class _AppWidgetState extends State<AppWidget> {
     HomePage(),
     Loja(),
     Login(),
+    // Regras(),
+    Historia(),
   ];
 
   void _onItemSelected(int index) {
