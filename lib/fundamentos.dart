@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:volleyball_center_mobile/historia.dart';
+import 'package:volleyball_center_mobile/navbar.dart';
+import 'package:volleyball_center_mobile/regras.dart';
 
 class Fundamentos extends StatefulWidget {
   const Fundamentos({super.key});
@@ -11,6 +14,7 @@ class _FundamentosState extends State<Fundamentos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //        appBar: const Navbar(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -19,26 +23,36 @@ class _FundamentosState extends State<Fundamentos> {
             SizedBox(
               height: 20.0,
             ),
-           Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              'Fundamentos',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            
-            Text(
-              'História',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-             Text(
-              'Regra',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ],
-           ),
+          ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Fundamentos()),
+            );
+          },
+          child: Text('Fundamentos'),
+        ),
+             ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Historia()),
+            );
+          },
+          child: Text('História'),
+        ),
+          ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Regras()),
+            );
+          },
+          child: Text('Regras'),
+        ),
+          
                 SizedBox(
-              height: 20.0,
+              height: 20,
             ),
             container("Saque",
                 "O saque é a ação que inicia cada rally (jogo de pontos) e consiste em lançar a bola por cima do seu corpo e golpeá-la para que ela atravessar a rede e caia na quadra adversária."),
@@ -80,10 +94,10 @@ class _FundamentosState extends State<Fundamentos> {
                   width: 300,
                   image: AssetImage('assets/images/recepcao.jpg')),
             ),
-          ],
-        ),
-      ),
-    );
+        ],
+        )
+           ),
+      );
   }
 
   Text textCreator(String text) {
