@@ -23,7 +23,7 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => MyApp()));
                 },
-                child: Image.asset("assets/images/logo.png", width: 80, height: 80),
+                child: Image.asset("images/logo2.png", width: 50, height: 50),
               ),
             ),
             const SizedBox(width: 10),
