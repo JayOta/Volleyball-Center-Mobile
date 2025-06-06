@@ -10,10 +10,14 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+        body: SingleChildScrollView(
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+              height: 20,
+            ),
             Text(
               "Login",
               style: TextStyle(color: Color(0xFF14276B), fontSize: 40),
@@ -53,7 +57,7 @@ class Login extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 loginIcon(
-                    AssetImage('assets/images/google.png'), "Google", context),
+                    AssetImage('assets/images/google.png'), "google", context),
                 SizedBox(width: 20),
                 loginIcon(
                     AssetImage('assets/images/facebook.png'), 'Face', context),
@@ -105,7 +109,7 @@ class Login extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 
   SizedBox input(String placeholder) {
@@ -194,7 +198,7 @@ class Login extends StatelessWidget {
           padding: EdgeInsets.all(20),
         ),
         onPressed: () {
-          if (name == "Google") {
+          if (name == "google") {
             loginGoogle(context);
           }
         },

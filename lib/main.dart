@@ -1,3 +1,5 @@
+// ignore_for_file: use_full_hex_values_for_flutter_colors, avoid_unnecessary_containers, sized_box_for_whitespace, deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:volleyball_center_mobile/login.dart';
 import 'package:volleyball_center_mobile/loja.dart';
@@ -6,7 +8,9 @@ import 'package:volleyball_center_mobile/menuBar.dart';
 import 'package:volleyball_center_mobile/navbar.dart';
 import 'package:volleyball_center_mobile/noticias.dart';
 import 'package:volleyball_center_mobile/historia.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:volleyball_center_mobile/regras.dart';
+
 //import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -37,39 +41,59 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
-  int _currentIndex = 2; // Página inicial padrão
-
-  final List<Widget> _pages = [
-    Fundamentos(),
-    Noticias(),
-    HomePage(),
-    Loja(),
-    Login(),
-    // Regras(),
-    Historia(),
-  ];
+  int _selectedIndex = 2; // Página inicial padrão
 
   void _onItemSelected(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    if (index == 4) {
+      // índice 4 é o botão perfil
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Login()),
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const Navbar(),
-      body: Center(
-        child: _pages[_currentIndex],
-      ), // Exibe a página selecionada
+      body: _buildBody(_selectedIndex), // Exibe a página selecionada
       bottomNavigationBar: MenuBarFile(onItemSelected: _onItemSelected),
     );
+  }
+
+  Widget _buildBody(int index) {
+    switch (index) {
+      case 0:
+        return Fundamentos();
+      case 1:
+        return Noticias();
+      case 2:
+        return HomePage();
+      case 3:
+        return Loja();
+      case 5:
+        return Noticias();
+      default:
+        return Container();
+    }
   }
 }
 
 // Exemplo de páginas (substitua pelas suas próprias páginas)
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _currentCarouselIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -77,46 +101,135 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Container(
-            color: Color(0xffffcce00),
+            color: Color(0xFFFFCCE00),
             width: double.infinity,
             height: 80,
           ),
           SizedBox(
+            height: 50,
+          ),
+          TextButton(
+            style: ButtonStyle(
+              splashFactory: NoSplash.splashFactory,
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+            ),
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Noticias()));
+            },
+            child: Column(
+              children: [
+                mainCard(),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(12), // 🔥 aqui define o radius
+                      child: Image.asset(
+                        "images/jogo-2.jpg",
+                        width: 165,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(width: 16), // 🔥 espaço entre as imagens
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset(
+                        "assets/images/jogo-3.jpg",
+                        width: 165,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          SizedBox(
             height: 20,
           ),
-          mainCard(),
+
           SizedBox(
-            height: 10,
+            height: 80,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius:
-                    BorderRadius.circular(12), // 🔥 aqui define o radius
-                child: Image.asset(
-                  "assets/images/jogo-3.jpg",
-                  width: 165,
-                  height: 100,
-                  fit: BoxFit.cover,
+          // centerContainer(),
+          Container(
+            color: Color(0xFF14276b),
+            height: 500,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: 53), // ajuste esse valor como quiser
+                  child: Container(
+                    width: 300, // aumentei um pouco para caber melhor
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Meias Nike ',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          TextSpan(
+                            text: 'por apenas ',
+                            style: TextStyle(color: Colors.amber),
+                          ),
+                          TextSpan(
+                            text: 'R\$60,00!!',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(width: 16), // 🔥 espaço entre as imagens
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  "assets/images/jogo-3.jpg",
-                  width: 165,
-                  height: 100,
-                  fit: BoxFit.cover,
+
+                SizedBox(
+                  height: 20,
                 ),
-              ),
-            ],
+                imageCarousel([
+                  "images/viseira-nike.png",
+                  "assets/images/tenis.jpg",
+                  "assets/images/meias.jpg",
+                  "images/meias-nike.png",
+                ]),
+                // Container(
+                //   width: 500,
+                //   padding: EdgeInsets.all(15),
+                //   child: Image.asset(
+                //     'assets/images/jogo-3.jpg',
+                //     width: 400,
+                //     height: 300,
+                //     fit: BoxFit.cover,
+                //   ),
+                // )
+              ],
+            ),
           ),
           SizedBox(
-            height: 30,
+            height: 80,
           ),
-          centerContainer(),
+
+          Text(
+            "Mais conteúdo em breve..",
+            style: TextStyle(fontSize: 25),
+          ),
+          SizedBox(
+            height: 20,
+          ),
         ]),
       ),
     );
@@ -129,6 +242,75 @@ class HomePage extends StatelessWidget {
           fontSize: 20,
           color: Colors.blue.shade300,
         ));
+  }
+
+  Widget imageCarousel(List<String> urls) {
+    return Column(
+      children: [
+        CarouselSlider(
+          options: CarouselOptions(
+            height: 300,
+            autoPlay: true,
+            enlargeCenterPage: true,
+            viewportFraction: 0.8,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _currentCarouselIndex = index;
+              });
+            },
+          ),
+          items: urls.map((imagePath) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.50),
+                        blurRadius: 6,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      imagePath,
+                      fit: BoxFit.cover,
+                      width: 400,
+                    ),
+                  ),
+                );
+              },
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: urls.asMap().entries.map((entry) {
+            return GestureDetector(
+              onTap: () =>
+                  {}, // você pode adicionar funcionalidade aqui se quiser
+              child: Container(
+                width: 10.0,
+                height: 10.0,
+                margin: EdgeInsets.symmetric(horizontal: 4.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _currentCarouselIndex == entry.key
+                      ? Colors.white
+                      : Colors.grey,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
   }
 
   TextButton buttonCreator(String text, BuildContext context) {
@@ -169,23 +351,39 @@ Container centerContainer() {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'VENHA VER NOSSOS PRODUTOS!',
-                style: TextStyle(color: Colors.white, fontSize: 15),
+              SizedBox(
+                width: 200, // 🔥 Ajuste como quiser
+                child: Text(
+                  'VENHA VER NOSSOS PRODUTOS!',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
               ),
               SizedBox(
                 height: 10,
               ),
-              Row(
+              Wrap(
                 children: [
-                  Text('Meias Nike ', style: TextStyle(color: Colors.white)),
-                  Text('por apenas ',
-                      style: TextStyle(color: Color(0xffffcce00))),
-                  Text('RS60,00!!', style: TextStyle(color: Colors.white)),
+                  Text(
+                    'Meias Nike ',
+                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  ),
+                  Text(
+                    'por apenas ',
+                    style: TextStyle(color: Color(0xffffcce00), fontSize: 17),
+                  ),
                 ],
+              ),
+              Text(
+                'RS60,00!!',
+                style: TextStyle(color: Colors.white, fontSize: 17),
+              ),
+              SizedBox(
+                height: 20,
               ),
               TextButton(
                   style: ButtonStyle(
+                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6))),
                     backgroundColor: WidgetStatePropertyAll(Color(0xffffcce00)),
                   ),
                   onPressed: () {},
@@ -193,11 +391,13 @@ Container centerContainer() {
             ],
           ),
         ), //
+        Spacer(),
         Container(
           child: Image.asset(
             "assets/images/jogo-3.jpg",
-            width: 250,
+            width: 280,
             height: 300,
+            fit: BoxFit.cover,
           ),
         ),
       ],
@@ -208,7 +408,7 @@ Container centerContainer() {
 Column mainCard() {
   return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
     Container(
-      width: 350,
+      width: 342,
       height: 220,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -227,8 +427,8 @@ Column mainCard() {
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Image.asset(
-              'assets/images/jogo-3.jpg',
-              width: 350,
+              'images/jogo-1.jpg',
+              width: 342,
               height: 220,
               fit: BoxFit.cover,
             ),
@@ -238,7 +438,7 @@ Column mainCard() {
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Container(
-              width: 350,
+              width: 342,
               height: 220,
               color: Colors.black.withOpacity(0.3),
             ),

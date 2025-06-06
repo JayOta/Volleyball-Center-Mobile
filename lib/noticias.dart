@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:volleyball_center_mobile/main.dart';
+import 'package:volleyball_center_mobile/login.dart';
+import 'package:volleyball_center_mobile/loja.dart';
+import 'package:volleyball_center_mobile/fundamentos.dart';
+import 'package:volleyball_center_mobile/historia.dart';
+import 'package:volleyball_center_mobile/navbar.dart';
+import 'package:volleyball_center_mobile/regras.dart';
 
 class Noticias extends StatefulWidget {
   const Noticias({super.key});

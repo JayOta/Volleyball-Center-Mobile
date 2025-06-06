@@ -29,7 +29,7 @@ class _MenuBarFileState extends State<MenuBarFile> {
         type: BottomNavigationBarType
             .fixed, // Mantém os ícones visíveis mesmo com 5 itens
         backgroundColor: const Color(0xFF14276b),
-        selectedItemColor: Colors.white,
+        selectedItemColor: const Color(0xFFFCCE00),
         unselectedItemColor: Colors.white70,
         showSelectedLabels: false,
         showUnselectedLabels: false,
