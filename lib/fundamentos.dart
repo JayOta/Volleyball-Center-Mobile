@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:volleyball_center_mobile/historia.dart';
 import 'package:volleyball_center_mobile/regras.dart';
+import 'package:volleyball_center_mobile/rodizios.dart';
 
 class Fundamentos extends StatefulWidget {
   const Fundamentos({super.key});
@@ -26,6 +27,8 @@ class _FundamentosState extends State<Fundamentos> {
         return Historia(); // Certifique-se que Historia é um Widget pronto
       case 2:
         return Regras(); // Certifique-se que Regras é um Widget pronto
+        case 3:
+        return Rodizios(); 
       default:
         return Container();
     }
@@ -33,11 +36,7 @@ class _FundamentosState extends State<Fundamentos> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Conteúdos'),
-        centerTitle: true,
-      ),
+    return Scaffold( 
       body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -54,6 +53,10 @@ class _FundamentosState extends State<Fundamentos> {
           BottomNavigationBarItem(
             icon: Icon(Icons.rule),
             label: 'Regras',
+          ),
+            BottomNavigationBarItem(
+            icon: Icon(Icons.rule),
+            label: 'Rodizios',
           ),
         ],
       ),
