@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     ClipRRect(
                       borderRadius:
-                          BorderRadius.circular(12), // 🔥 aqui define o radius
+                          BorderRadius.circular(12), 
                       child: Image.asset(
                         "images/jogo-2.jpg",
                         width: 165,
@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    SizedBox(width: 16), // 🔥 espaço entre as imagens
+                    SizedBox(width: 16), 
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
@@ -352,7 +352,7 @@ Container centerContainer() {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: 200, // 🔥 Ajuste como quiser
+                width: 200, 
                 child: Text(
                   'VENHA VER NOSSOS PRODUTOS!',
                   style: TextStyle(color: Colors.white, fontSize: 20),
