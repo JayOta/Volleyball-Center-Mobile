@@ -18,6 +18,10 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
               width: 100,
               height: 80,
               child: TextButton(
+                style: ButtonStyle(
+                  splashFactory: NoSplash.splashFactory,
+                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                ),
                 onPressed: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => MyApp()));

@@ -15,7 +15,9 @@ class Login extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 70,),
+            SizedBox(
+              height: 230,
+            ),
             Text(
               "Login",
               style: TextStyle(color: Color(0xFF14276B), fontSize: 40),
@@ -31,12 +33,11 @@ class Login extends StatelessWidget {
               child: TextButton(
                 style: ButtonStyle(
                   backgroundColor: WidgetStatePropertyAll(Color(0xFF14276B)),
-                ),    
+                ),
                 onPressed: () {},
                 child: Text(
                   "Login",
                   style: TextStyle(color: Colors.white, fontSize: 20),
-                       
                 ),
               ),
             ),
@@ -69,7 +70,7 @@ class Login extends StatelessWidget {
                   onPressed: () {},
                   child: Text(
                     'Esqueceu a senha?',
-                    style: TextStyle(color:Color(0xFF14276B)),
+                    style: TextStyle(color: Color(0xFF14276B)),
                   ),
                 ),
                 SizedBox(height: 15),

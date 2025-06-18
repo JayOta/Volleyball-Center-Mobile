@@ -27,8 +27,8 @@ class _FundamentosState extends State<Fundamentos> {
         return Historia(); // Certifique-se que Historia é um Widget pronto
       case 2:
         return Regras(); // Certifique-se que Regras é um Widget pronto
-        case 3:
-        return Rodizios(); 
+      case 3:
+        return Rodizios();
       default:
         return Container();
     }
@@ -36,11 +36,14 @@ class _FundamentosState extends State<Fundamentos> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(
       body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        selectedItemColor: Color(0xFFFFCCE00),
+        unselectedItemColor: Color(0xFF14276B),
+        unselectedLabelStyle: TextStyle(color: Color(0xFF14276B)),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.sports_volleyball),
@@ -54,8 +57,8 @@ class _FundamentosState extends State<Fundamentos> {
             icon: Icon(Icons.rule),
             label: 'Regras',
           ),
-            BottomNavigationBarItem(
-            icon: Icon(Icons.rule),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.change_circle),
             label: 'Rodizios',
           ),
         ],
