@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'produto_pagina.dart';
 
 class Loja extends StatefulWidget {
   const Loja({super.key});
@@ -30,40 +31,37 @@ class _LojaState extends State<Loja> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                cardProduct(
-                    "Bola de vôlei Penalty", "RS 249,99", "images/bola.jpg"),
+                cardProduct(context, "Bola de vôlei Penalty", "RS 249,99", "images/bola.jpg"),
                 SizedBox(
                   width: 60,
                 ),
-                cardProduct("Tênis de vôlei", "RS 299,99", "images/tenis.jpg"),
+                cardProduct(context, "Tênis de vôlei", "RS 299,99", "images/tenis.jpg"),
               ],
             ),
             SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                cardProduct("Joelheira", "RS 99,99", "images/joelheira.jpg"),
+                cardProduct(context, "Joelheira", "RS 99,99", "images/joelheira.jpg"),
                 SizedBox(
                   width: 60,
                 ),
-                cardProduct(
-                    "Manguito de Vôlei", "RS 39,99", "images/manguito.jpg"),
+                cardProduct(context, "Manguito de Vôlei", "RS 39,99", "images/manguito.jpg"),
               ],
             ),
             SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                cardProduct("Meias", "RS29,99", 'images/meias.jpg'),
+                cardProduct(context, "Meias", "RS29,99", 'images/meias.jpg'),
                 SizedBox(
                   width: 60,
                 ),
-                cardProduct(
-                    "Marcador de pontos", "RS 99,99", 'images/placar.jpg'),
+                cardProduct(context,"Marcador de pontos", "RS 99,99", 'images/placar.jpg'),
               ],
             ),
             SizedBox(height: 40),
-            cardProduct("Faixa", "RS 29,99", 'images/faixa.jpg'),
+            cardProduct(context,"Faixa", "RS 29,99", 'images/faixa.jpg'),
             SizedBox(height: 20),
           ],
         ),
@@ -83,7 +81,7 @@ Text textCreator(String text) {
   );
 }
 
-Center cardProduct(String nome, String preco, String imagem) {
+Center cardProduct(BuildContext context, String nome, String preco, String imagem) {
   return Center(
     child: Card(
       elevation: 4,
@@ -149,10 +147,24 @@ Center cardProduct(String nome, String preco, String imagem) {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+              Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProdutoPage(
+                          produto: {
+                          'nome': nome,
+                          'preco': preco,
+                          'imagem': imagem,   
+                          'descricao': 'Descrição do produto', // ou deixe vazia se não tiver
+                          'categorias_id': 1,
+                        },
+                          )),
+              );
+              },
               child: Text(
                 "Comprar",
                 style: TextStyle(color: Colors.white),
+                
               ),
             ),
           ],
