@@ -25,35 +25,36 @@ class _ProdutoPageState extends State<ProdutoPage> {
             Text(
               'Produtos de Edição Limitada Verão',
               style:TextStyle(color: Color(0xFF14276B), fontSize: 25),),  
-            SizedBox(height: 60,),  
+            SizedBox(height: 40,),  
             Image.asset(produto['imagem'], height: 180),
-            const SizedBox(height: 16),
-            const SizedBox(height: 8),
-            Text(produto['nome'], style: const TextStyle(fontSize: 24)),
-            const SizedBox(height: 8),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+              Text(produto['nome'], style: const TextStyle(fontSize: 24)),
+              ],
+            ),
+            
             Row(
               children: [
                 Text(
                   produto['preco'],
                   style: const TextStyle(
                     fontSize: 22,
-                    decoration: TextDecoration.lineThrough,
                   ),
-                ),
-                const SizedBox(width: 10),
-                const Text(
-                  '25%',
-                  style: TextStyle(fontSize: 22, color: Colors.red),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 30),
+            Row(
+              children: [   
             // Tamanhos
             Text('Tamanhos', style: Theme.of(context).textTheme.titleMedium),
             Wrap(
-              spacing: 8,
+              spacing: 6,
               children: _buildTamanhos(produto['categorias_id']),
+            ),]
             ),
+        
             const SizedBox(height: 20),
             // Quantidade
             Row(
