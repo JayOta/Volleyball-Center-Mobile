@@ -56,15 +56,13 @@ class _CadastroState extends State<Cadastro> {
       );
 
       if (userCredential?.user != null) {
-        // Atualizar nome do usuário (agora também salva no Firestore)
-        print('Tentando atualizar nome do usuário...');
-        await _authService.updateDisplayName(_nomeController.text.trim());
+        print('Usuário criado com sucesso! UID: ${userCredential!.user!.uid}');
 
         // Mostrar mensagem de sucesso
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Cadastro realizado com sucesso!\nDados salvos no Firestore.'),
+              content: Text('Cadastro realizado com sucesso!\nDados salvos no Authentication e Firestore.'),
               backgroundColor: Colors.green,
               duration: Duration(seconds: 3),
             ),

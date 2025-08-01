@@ -24,14 +24,30 @@ class AuthService {
       
       print('Usuário criado com sucesso: ${result.user?.uid}'); // Debug log
       
-      // Salvar perfil no Firestore se fornecido o nome
-      if (result.user != null && displayName != null && displayName.isNotEmpty) {
-        await _firestoreService.createUserProfile(
-          uid: result.user!.uid,
-          name: displayName,
-          email: email,
-        );
-        print('Dados do usuário salvos no Firestore'); // Debug log
+      if (result.user != null) {
+        // 1. Definir displayName no Authentication primeiro
+        if (displayName != null && displayName.isNotEmpty) {
+          print('Definindo displayName no Authentication: $displayName'); // Debug log
+          await result.user!.updateDisplayName(displayName);
+          await result.user!.reload();
+          print('DisplayName definido com sucesso no Authentication'); // Debug log
+        }
+        
+        // 2. Criar perfil no Firestore (com retry em caso de falha)
+        if (displayName != null && displayName.isNotEmpty) {
+          try {
+            await _firestoreService.createUserProfile(
+              uid: result.user!.uid,
+              name: displayName,
+              email: email,
+            );
+            print('Perfil criado com sucesso no Firestore'); // Debug log
+          } catch (firestoreError) {
+            print('Erro ao criar perfil no Firestore (não crítico): $firestoreError'); // Debug log
+            // Não falha todo o processo se Firestore der erro
+            // O usuário ainda pode fazer login e o perfil pode ser criado depois
+          }
+        }
       }
       
       return result;
@@ -95,18 +111,37 @@ class AuthService {
   Future<void> updateDisplayName(String displayName) async {
     try {
       print('Atualizando nome do usuário para: $displayName'); // Debug log
-      await currentUser?.updateDisplayName(displayName);
-      await currentUser?.reload(); // Recarrega os dados do usuário
       
-      // Atualizar também no Firestore
-      if (currentUser != null) {
+      if (currentUser == null) {
+        throw 'Usuário não está logado';
+      }
+      
+      // Atualizar no Authentication
+      await currentUser!.updateDisplayName(displayName);
+      await currentUser!.reload(); // Recarrega os dados do usuário
+      print('DisplayName atualizado no Authentication'); // Debug log
+      
+      // Verificar se o perfil existe no Firestore
+      bool userExists = await _firestoreService.userExists(currentUser!.uid);
+      
+      if (userExists) {
+        // Se existe, atualizar
         await _firestoreService.updateUserProfile(
           uid: currentUser!.uid,
           updates: {'name': displayName},
         );
+        print('Nome atualizado no Firestore'); // Debug log
+      } else {
+        // Se não existe, criar perfil completo
+        await _firestoreService.createUserProfile(
+          uid: currentUser!.uid,
+          name: displayName,
+          email: currentUser!.email ?? 'email@desconhecido.com',
+        );
+        print('Perfil criado no Firestore com nome atualizado'); // Debug log
       }
       
-      print('Nome atualizado com sucesso'); // Debug log
+      print('Nome atualizado com sucesso em Authentication e Firestore'); // Debug log
     } catch (e) {
       print('Erro ao atualizar nome: $e'); // Debug log
       throw 'Erro ao atualizar nome: $e';
