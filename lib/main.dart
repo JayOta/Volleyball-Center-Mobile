@@ -10,17 +10,23 @@ import 'package:volleyball_center_mobile/noticias.dart';
 import 'package:volleyball_center_mobile/historia.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:volleyball_center_mobile/regras.dart';
-
-//import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await Firebase.initializeApp();  Inicializa o Firebase
-  runApp(const MyApp());
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final senhaController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +133,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular(12), 
+                      borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
                         "images/jogo-2.jpg",
                         width: 165,
@@ -136,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    SizedBox(width: 16), 
+                    SizedBox(width: 16),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
@@ -352,7 +357,7 @@ Container centerContainer() {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: 200, 
+                width: 200,
                 child: Text(
                   'VENHA VER NOSSOS PRODUTOS!',
                   style: TextStyle(color: Colors.white, fontSize: 20),
