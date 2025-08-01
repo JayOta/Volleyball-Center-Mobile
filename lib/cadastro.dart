@@ -52,10 +52,11 @@ class _CadastroState extends State<Cadastro> {
       final userCredential = await _authService.registerWithEmailAndPassword(
         _emailController.text.trim(),
         _senhaController.text,
+        displayName: _nomeController.text.trim(),
       );
 
       if (userCredential?.user != null) {
-        // Atualizar nome do usuário
+        // Atualizar nome do usuário (agora também salva no Firestore)
         print('Tentando atualizar nome do usuário...');
         await _authService.updateDisplayName(_nomeController.text.trim());
 
@@ -63,7 +64,7 @@ class _CadastroState extends State<Cadastro> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Cadastro realizado com sucesso!'),
+              content: Text('Cadastro realizado com sucesso!\nDados salvos no Firestore.'),
               backgroundColor: Colors.green,
               duration: Duration(seconds: 3),
             ),

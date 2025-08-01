@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:volleyball_center_mobile/services/firestore_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirestoreService _firestoreService = FirestoreService();
 
   // Stream para ouvir mudanças no estado de autenticação
   Stream<User?> get authStateChanges => _auth.authStateChanges();
@@ -11,7 +13,7 @@ class AuthService {
 
   // Cadastro com email e senha
   Future<UserCredential?> registerWithEmailAndPassword(
-      String email, String password) async {
+      String email, String password, {String? displayName}) async {
     try {
       print('Tentando criar usuário com email: $email'); // Debug log
       
@@ -21,6 +23,17 @@ class AuthService {
       );
       
       print('Usuário criado com sucesso: ${result.user?.uid}'); // Debug log
+      
+      // Salvar perfil no Firestore se fornecido o nome
+      if (result.user != null && displayName != null && displayName.isNotEmpty) {
+        await _firestoreService.createUserProfile(
+          uid: result.user!.uid,
+          name: displayName,
+          email: email,
+        );
+        print('Dados do usuário salvos no Firestore'); // Debug log
+      }
+      
       return result;
     } on FirebaseAuthException catch (e) {
       print('FirebaseAuthException: ${e.code} - ${e.message}'); // Debug log
@@ -43,6 +56,20 @@ class AuthService {
       );
       
       print('Login realizado com sucesso: ${result.user?.uid}'); // Debug log
+      
+      // Verificar se o usuário existe no Firestore, se não, criar
+      if (result.user != null) {
+        bool userExists = await _firestoreService.userExists(result.user!.uid);
+        if (!userExists) {
+          await _firestoreService.createUserProfile(
+            uid: result.user!.uid,
+            name: result.user!.displayName ?? 'Usuário',
+            email: result.user!.email ?? email,
+          );
+          print('Perfil criado no Firestore para usuário existente'); // Debug log
+        }
+      }
+      
       return result;
     } on FirebaseAuthException catch (e) {
       print('FirebaseAuthException no login: ${e.code} - ${e.message}'); // Debug log
@@ -70,6 +97,15 @@ class AuthService {
       print('Atualizando nome do usuário para: $displayName'); // Debug log
       await currentUser?.updateDisplayName(displayName);
       await currentUser?.reload(); // Recarrega os dados do usuário
+      
+      // Atualizar também no Firestore
+      if (currentUser != null) {
+        await _firestoreService.updateUserProfile(
+          uid: currentUser!.uid,
+          updates: {'name': displayName},
+        );
+      }
+      
       print('Nome atualizado com sucesso'); // Debug log
     } catch (e) {
       print('Erro ao atualizar nome: $e'); // Debug log
@@ -89,6 +125,34 @@ class AuthService {
     } catch (e) {
       print('Erro geral no reset: $e'); // Debug log
       throw 'Erro inesperado ao enviar email: $e';
+    }
+  }
+
+  // Buscar perfil completo do usuário do Firestore
+  Future<Map<String, dynamic>?> getUserProfile() async {
+    try {
+      if (currentUser != null) {
+        return await _firestoreService.getUserProfile(currentUser!.uid);
+      }
+      return null;
+    } catch (e) {
+      print('Erro ao buscar perfil do usuário: $e'); // Debug log
+      return null;
+    }
+  }
+
+  // Atualizar perfil completo
+  Future<void> updateUserProfile(Map<String, dynamic> updates) async {
+    try {
+      if (currentUser != null) {
+        await _firestoreService.updateUserProfile(
+          uid: currentUser!.uid,
+          updates: updates,
+        );
+      }
+    } catch (e) {
+      print('Erro ao atualizar perfil: $e'); // Debug log
+      throw 'Erro ao atualizar perfil: $e';
     }
   }
 
