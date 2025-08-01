@@ -131,4 +131,42 @@ class _FundamentosState extends State<Fundamentos> {
       ],
     );
   }
+
+  Column cardLine() {
+    return Column(
+      children: [
+        Row(
+          // Linha
+          children: [
+            Container(
+              width: 200,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Color(0xFF14276B),
+              ),
+              child: Row(
+                // Esquerda e Direita
+                children: [
+                  Column(
+                    // Esquerda
+                    children: [
+                      Text('Texto Principal'),
+                      TextButton(
+                          onPressed: () {}, child: Text('Botão com texto')),
+                    ],
+                  ),
+                  Image.asset('assets/images/Saque.jpg',
+                      height: 300, width: 300) // Direita
+                ],
+              ),
+            ), // Card 1
+            Container(
+              width: 200,
+              height: 50,
+            ), // Card 2
+          ],
+        ),
+      ],
+    );
+  }
 }
