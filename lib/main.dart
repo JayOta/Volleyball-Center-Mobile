@@ -10,12 +10,22 @@ import 'package:volleyball_center_mobile/noticias.dart';
 import 'package:volleyball_center_mobile/historia.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:volleyball_center_mobile/regras.dart';
-
-//import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await Firebase.initializeApp();  Inicializa o Firebase
+  
+  try {
+    print('Inicializando Firebase...'); // Debug log
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print('Firebase inicializado com sucesso!'); // Debug log
+  } catch (e) {
+    print('Erro ao inicializar Firebase: $e'); // Debug log
+  }
+  
   runApp(const MyApp());
 }
 
