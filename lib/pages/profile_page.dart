@@ -22,15 +22,37 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _loadUserData() async {
     try {
-      // Pegar dados do usuário do Firestore
-      final profile = await _authService.getUserProfile();
+      print('ProfilePage: Carregando dados do usuário...'); // Debug log
       
-      setState(() {
-        _userProfile = profile;
-        _isLoading = false;
-      });
+      if (_authService.currentUser == null) {
+        print('ProfilePage: Usuário não está logado'); // Debug log
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+      
+      // Tenta pegar dados do Firestore, mas não quebra se não conseguir
+      try {
+        final profile = await _authService.getUserProfile();
+        print('ProfilePage: Dados do Firestore: $profile'); // Debug log
+        
+        setState(() {
+          _userProfile = profile;
+          _isLoading = false;
+        });
+      } catch (e) {
+        print('ProfilePage: Erro ao carregar Firestore (não é crítico): $e'); // Debug log
+        
+        // Mesmo se der erro no Firestore, continua sem os dados
+        setState(() {
+          _userProfile = null;
+          _isLoading = false;
+        });
+      }
     } catch (e) {
-      print('Erro ao carregar dados do usuário: $e');
+      print('ProfilePage: Erro geral ao carregar dados: $e'); // Debug log
+      
       setState(() {
         _isLoading = false;
       });

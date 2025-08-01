@@ -32,15 +32,29 @@ class FirestoreService {
   // Buscar perfil do usuário
   Future<Map<String, dynamic>?> getUserProfile(String uid) async {
     try {
+      print('Buscando perfil do usuário no Firestore: $uid'); // Debug log
+      
+      if (uid.isEmpty) {
+        print('UID está vazio'); // Debug log
+        return null;
+      }
+      
       DocumentSnapshot doc = await _firestore.collection('users').doc(uid).get();
       
+      print('Documento existe: ${doc.exists}'); // Debug log
+      
       if (doc.exists) {
-        return doc.data() as Map<String, dynamic>?;
+        final data = doc.data() as Map<String, dynamic>?;
+        print('Dados encontrados: $data'); // Debug log
+        return data;
+      } else {
+        print('Documento não existe para UID: $uid'); // Debug log
+        return null;
       }
-      return null;
     } catch (e) {
       print('Erro ao buscar perfil do usuário: $e'); // Debug log
-      throw 'Erro ao buscar dados do usuário: $e';
+      print('Stack trace: ${StackTrace.current}'); // Debug stack trace
+      return null; // Retorna null em vez de throw para não quebrar o app
     }
   }
 

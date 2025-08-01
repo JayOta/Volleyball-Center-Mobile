@@ -131,12 +131,23 @@ class AuthService {
   // Buscar perfil completo do usuário do Firestore
   Future<Map<String, dynamic>?> getUserProfile() async {
     try {
-      if (currentUser != null) {
-        return await _firestoreService.getUserProfile(currentUser!.uid);
+      print('AuthService: Buscando perfil do usuário...'); // Debug log
+      
+      if (currentUser == null) {
+        print('AuthService: Usuário não está logado'); // Debug log
+        return null;
       }
-      return null;
+      
+      print('AuthService: UID do usuário: ${currentUser!.uid}'); // Debug log
+      
+      final profile = await _firestoreService.getUserProfile(currentUser!.uid);
+      
+      print('AuthService: Perfil retornado: $profile'); // Debug log
+      
+      return profile;
     } catch (e) {
-      print('Erro ao buscar perfil do usuário: $e'); // Debug log
+      print('AuthService: Erro ao buscar perfil do usuário: $e'); // Debug log
+      print('AuthService: Stack trace: ${StackTrace.current}'); // Debug stack trace
       return null;
     }
   }

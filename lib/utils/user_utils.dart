@@ -32,9 +32,20 @@ class UserUtils {
   // ✅ Pegar dados completos do Firestore
   static Future<Map<String, dynamic>?> getUserProfile() async {
     try {
-      return await _authService.getUserProfile();
+      print('UserUtils: Iniciando busca do perfil...'); // Debug log
+      
+      if (!isLoggedIn()) {
+        print('UserUtils: Usuário não está logado'); // Debug log
+        return null;
+      }
+      
+      final profile = await _authService.getUserProfile();
+      print('UserUtils: Perfil obtido: $profile'); // Debug log
+      
+      return profile;
     } catch (e) {
-      print('Erro ao buscar perfil: $e');
+      print('UserUtils: Erro ao buscar perfil: $e'); // Debug log
+      print('UserUtils: Stack trace: ${StackTrace.current}'); // Debug stack trace
       return null;
     }
   }
@@ -42,10 +53,32 @@ class UserUtils {
   // ✅ Pegar nome do usuário (prioriza Firestore, fallback para Authentication)
   static Future<String> getUserName() async {
     try {
-      final profile = await getUserProfile();
-      return profile?['name'] ?? getUserDisplayName();
+      print('UserUtils: Buscando nome do usuário...'); // Debug log
+      
+      if (!isLoggedIn()) {
+        print('UserUtils: Usuário não logado, retornando nome padrão'); // Debug log
+        return 'Usuário';
+      }
+      
+      // Primeiro tenta pegar do Firestore
+      try {
+        final profile = await getUserProfile();
+        if (profile != null && profile['name'] != null && profile['name'].toString().isNotEmpty) {
+          print('UserUtils: Nome encontrado no Firestore: ${profile['name']}'); // Debug log
+          return profile['name'].toString();
+        }
+      } catch (e) {
+        print('UserUtils: Erro ao buscar no Firestore, usando Authentication: $e'); // Debug log
+      }
+      
+      // Fallback para Authentication
+      final displayName = getUserDisplayName();
+      print('UserUtils: Usando nome do Authentication: $displayName'); // Debug log
+      return displayName;
+      
     } catch (e) {
-      return getUserDisplayName();
+      print('UserUtils: Erro geral ao buscar nome: $e'); // Debug log
+      return getUserDisplayName(); // Último fallback
     }
   }
 
