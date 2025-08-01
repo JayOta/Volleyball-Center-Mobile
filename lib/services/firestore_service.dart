@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -23,8 +24,18 @@ class FirestoreService {
       });
       
       print('Perfil do usuário criado com sucesso no Firestore'); // Debug log
+    } on FirebaseException catch (e) {
+      print('Erro Firebase ao criar perfil: ${e.code} - ${e.message}'); // Debug log
+      
+      if (e.code == 'permission-denied') {
+        throw 'Erro de permissão: Verifique as regras de segurança do Firestore. As regras atuais não permitem escrita para usuários autenticados.';
+      } else if (e.code == 'unavailable') {
+        throw 'Firestore temporariamente indisponível. Tente novamente.';
+      } else {
+        throw 'Erro do Firebase: ${e.message}';
+      }
     } catch (e) {
-      print('Erro ao criar perfil do usuário no Firestore: $e'); // Debug log
+      print('Erro geral ao criar perfil do usuário no Firestore: $e'); // Debug log
       throw 'Erro ao salvar dados do usuário: $e';
     }
   }
@@ -70,8 +81,20 @@ class FirestoreService {
         await _firestore.collection('users').doc(uid).update(updates);
         print('Perfil do usuário atualizado com sucesso'); // Debug log
       }
+    } on FirebaseException catch (e) {
+      print('Erro Firebase ao atualizar perfil: ${e.code} - ${e.message}'); // Debug log
+      
+      if (e.code == 'permission-denied') {
+        throw 'Erro de permissão: As regras do Firestore não permitem atualização para este usuário. Configure as regras de segurança.';
+      } else if (e.code == 'not-found') {
+        throw 'Perfil do usuário não encontrado no Firestore.';
+      } else if (e.code == 'unavailable') {
+        throw 'Firestore temporariamente indisponível. Tente novamente.';
+      } else {
+        throw 'Erro do Firebase: ${e.message}';
+      }
     } catch (e) {
-      print('Erro ao atualizar perfil do usuário: $e'); // Debug log
+      print('Erro geral ao atualizar perfil do usuário: $e'); // Debug log
       throw 'Erro ao atualizar dados do usuário: $e';
     }
   }
