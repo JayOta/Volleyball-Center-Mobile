@@ -41,7 +41,7 @@ class _FundamentosState extends State<Fundamentos> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: Color(0xFFFFCCE00),
+        selectedItemColor: Color(0xffffcce00),
         unselectedItemColor: Color(0xFF14276B),
         unselectedLabelStyle: TextStyle(color: Color(0xFF14276B)),
         items: const [
@@ -102,6 +102,15 @@ class _FundamentosState extends State<Fundamentos> {
             child: Image.asset('assets/images/recepcao.jpg',
                 height: 300, width: 300),
           ),
+          // Center(
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       card("Saque", "Ver fundamento", "assets/images/Saque.jpg", 150,
+          //           120),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
@@ -132,38 +141,67 @@ class _FundamentosState extends State<Fundamentos> {
     );
   }
 
-  Column cardLine() {
+  Column card(String cardText, String cardTextButton, String imagePath,
+      double imageHeight, double imageWidth) {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           // Linha
           children: [
             Container(
-              width: 200,
-              height: 50,
+              width: 420,
+              height: 250,
               decoration: BoxDecoration(
                 color: Color(0xFF14276B),
               ),
+              margin: EdgeInsets.all(8),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 // Esquerda e Direita
                 children: [
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     // Esquerda
                     children: [
-                      Text('Texto Principal'),
+                      Text(
+                        cardText,
+                        style:
+                            TextStyle(color: Color(0xFFFFFFFF), fontSize: 16),
+                      ),
+                      SizedBox(height: 90),
                       TextButton(
-                          onPressed: () {}, child: Text('Botão com texto')),
+                          style: ButtonStyle(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    8), // Aqui está o BorderRadius
+                              ),
+                            ),
+                            backgroundColor: WidgetStatePropertyAll(
+                              Color(0xffffcce00),
+                            ),
+                            padding:
+                                WidgetStateProperty.all<EdgeInsetsGeometry>(
+                              EdgeInsets.all(15),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            cardTextButton,
+                            style: TextStyle(
+                                color: Color(0xFFFFFFFF), fontSize: 12),
+                          )),
                     ],
                   ),
-                  Image.asset('assets/images/Saque.jpg',
-                      height: 300, width: 300) // Direita
+                  Expanded(
+                      child: Image.asset(imagePath,
+                          height: imageHeight, width: imageWidth)),
+                  // Direita
                 ],
               ),
             ), // Card 1
-            Container(
-              width: 200,
-              height: 50,
-            ), // Card 2
           ],
         ),
       ],

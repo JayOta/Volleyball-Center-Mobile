@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:volleyball_center_mobile/navbar.dart';
 
 class Regras extends StatefulWidget {
   const Regras({super.key});
@@ -23,7 +22,6 @@ class _RegrasState extends State<Regras> {
               child: Text("Regras do vôlei",
                   style: TextStyle(color: Color(0xFF14276B), fontSize: 25)),
             ),
-          
             container("Área de jogo",
                 "A área de jogo do vôlei é formada pela quadra de jogo e a zona livre. A quadra de vôlei contém 18 metros de comprimento por 9 metros de largura, sendo retangular e simétrica. A superfície da quadra deve ser plana, horizontal e sem quaisquer irregularidades que possam prejudicar a realização da prática. A rede é instalada verticalmente sobre a linha central. Sua altura difere de acordo com o gênero, para homens é de 2,43 metros e para mulheres, 2,24 metros."),
             Center(
@@ -119,7 +117,6 @@ Column container(String titulo, String texto) {
           style: TextStyle(fontSize: 14),
         ),
       ),
-  
     ],
   );
 }

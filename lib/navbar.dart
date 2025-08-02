@@ -20,7 +20,7 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
               child: TextButton(
                 style: ButtonStyle(
                   splashFactory: NoSplash.splashFactory,
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  overlayColor: WidgetStateProperty.all(Colors.transparent),
                 ),
                 onPressed: () {
                   Navigator.of(context)
