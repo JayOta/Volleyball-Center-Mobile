@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:volleyball_center_mobile/navbar.dart';
+import 'package:volleyball_center_mobile/admin.dart';
 
 class ProdutoPage extends StatefulWidget {
   final Map<String, dynamic> produto; // Dados do produto
@@ -86,6 +87,10 @@ class _ProdutoPageState extends State<ProdutoPage> {
             ElevatedButton.icon(
               onPressed: () {
                 // Adicionar ao carrinho
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Admin()),
+    );
               },
               icon: const Icon(Icons.shopping_cart),
               label: const Text('Adicionar ao Carrinho'),
