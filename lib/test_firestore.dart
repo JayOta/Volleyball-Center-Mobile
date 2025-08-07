@@ -11,7 +11,7 @@ class TestFirestore extends StatefulWidget {
 
 class _TestFirestoreState extends State<TestFirestore> {
   String _status = 'Testando...';
-  List<String> _logs = [];
+  final List<String> _logs = [];
 
   @override
   void initState() {

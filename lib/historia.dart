@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:volleyball_center_mobile/navbar.dart';
 
 class Historia extends StatelessWidget {
   const Historia({super.key});
