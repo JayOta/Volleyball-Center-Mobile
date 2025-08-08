@@ -10,6 +10,7 @@ import 'package:volleyball_center_mobile/noticias.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'perfil.dart';
 
 
 
@@ -54,7 +55,7 @@ class _AppWidgetState extends State<AppWidget> {
       // índice 4 é o botão perfil
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Login()),
+        MaterialPageRoute(builder: (context) => Perfil()),
       );
     } else {
       setState(() {
