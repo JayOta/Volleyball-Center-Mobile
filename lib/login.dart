@@ -120,7 +120,7 @@ class _LoginState extends State<Login> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 230),
+                  const SizedBox(height: 210),
                   const Text(
                     "Login",
                     style: TextStyle(color: Color(0xFF14276B), fontSize: 40),
@@ -265,7 +265,7 @@ class _LoginState extends State<Login> {
                           'Face', context),
                     ],
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 35),
                   Column(
                     children: [
                       TextButton(
@@ -275,7 +275,7 @@ class _LoginState extends State<Login> {
                           style: TextStyle(color: Color(0xFF14276B)),
                         ),
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 12),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -302,7 +302,7 @@ class _LoginState extends State<Login> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 75),
                       const Text(
                         'Volleyball Center',
                         style:
