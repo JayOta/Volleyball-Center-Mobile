@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-
-
 class Navbaradmin extends StatelessWidget implements PreferredSizeWidget {
   const Navbaradmin({super.key});
 
-   @override
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -13,31 +12,22 @@ class Navbaradmin extends StatelessWidget implements PreferredSizeWidget {
       decoration: const BoxDecoration(
         color: Color.fromARGB(255, 170, 129, 129),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Stack(
+        alignment: Alignment.center, // garante centro absoluto
         children: [
-          const Padding(
-            padding: EdgeInsets.all(20),
-            child: Text(
-              '🔥 BostaApp 🔥',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 26, // Tamanho do texto
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white, size: 30),
-            onPressed: () {
-              print('Menu apertado, porra!');
-            },
+          // image centralizado vertical e horizontal
+          Image.asset(
+            'assets/images/logo.png',
+            width: 50,
+            height: 50,
+            fit: BoxFit.contain,
           ),
         ],
       ),
     );
   }
 
+  
   @override
-  Size get preferredSize => const Size.fromHeight(230);
+  Size get preferredSize => const Size.fromHeight(230); // altura da navbar
 }
