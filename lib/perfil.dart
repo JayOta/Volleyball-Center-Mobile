@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'menuBar.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({super.key});
@@ -25,11 +26,36 @@ class _PerfilState extends State<Perfil> {
                 ),
               ),
             ),
-      
-      
-          ],
+            SizedBox(height: 18), 
+        Container(
+        padding: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+    color: const Color(0xFF14276B).withOpacity(0.6), // Cor de fundo com opacidade
+    borderRadius: BorderRadius.circular(15),
         ),
+        child: Text(
+          'nome@gmail.com',
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.black, 
+          ),
+        ),
+  ),
+     SizedBox(height: 50), 
+  Container(
+        padding: EdgeInsets.all(100),    
+      decoration: BoxDecoration(
+    color: const Color.fromARGB(255, 185, 185, 185),
+    borderRadius: BorderRadius.circular(15),
+
+
       ),
-    );
+  )
+          ],
+),
+     
+           
+        ), 
+      );
   }
 }
