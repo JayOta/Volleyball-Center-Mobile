@@ -9,6 +9,7 @@ class Perfil extends StatefulWidget {
 }
 
 class _PerfilState extends State<Perfil> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -17,7 +18,7 @@ class _PerfilState extends State<Perfil> {
           children: [
             SizedBox(height: 80),
             Center( 
-              child: Container(width: 150, height: 150,child: Image.asset("assets/images/perfil.png", fit: BoxFit.fill,  color: const Color(0xFF14276b),),
+              child: SizedBox(width: 150, height: 150,child: Image.asset("assets/images/perfil.png", fit: BoxFit.fill,  color: const Color(0xFF14276b),),
               ),
             ),
                SizedBox(height: 20), 
