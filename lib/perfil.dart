@@ -44,12 +44,20 @@ class _PerfilState extends State<Perfil> {
   ),
      SizedBox(height: 50), 
   Container(
-        padding: EdgeInsets.all(100),    
+
+  
+    padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 200),
       decoration: BoxDecoration(
     color: const Color.fromARGB(255, 185, 185, 185),
     borderRadius: BorderRadius.circular(15),
-
-
+      ),
+      child: const Text(
+    'Editar',
+    style: TextStyle( 
+      fontSize: 25,
+      color: Colors.black,
+    ),
+  
       ),
   )
           ],
