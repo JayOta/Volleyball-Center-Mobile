@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:volleyball_center_mobile/main.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Navbar extends StatelessWidget implements PreferredSizeWidget {
   const Navbar({super.key});
@@ -17,7 +17,7 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
             const SizedBox(width: 10),
             SizedBox(
               width: 100,
-              height: 80,
+              height: 100,
               child: TextButton(
                 style: ButtonStyle(
                   splashFactory: NoSplash.splashFactory,
@@ -27,7 +27,7 @@ class Navbar extends StatelessWidget implements PreferredSizeWidget {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => MyApp()));
                 },
-                child: Image.asset("images/logo.png", width: 50, height: 50),
+                child: SvgPicture.asset("SvgPicture/logo.svg", width: 50, height: 50),
               ),
             ),
             const SizedBox(width: 10),
