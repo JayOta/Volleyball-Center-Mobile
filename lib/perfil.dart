@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter/menuBar.dart';
+import 'menuBar.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({super.key});
@@ -27,44 +27,76 @@ class _PerfilState extends State<Perfil> {
                 ),
               ),
             ),
-            SizedBox(height: 18), 
-        Container(
-        padding: EdgeInsets.all(5),
-        decoration: BoxDecoration(
-    color: const Color(0xFF14276B).withOpacity(0.6), // Cor de fundo com opacidade
+            SizedBox(height: 40), 
+  Container(
+  padding: const EdgeInsets.all(20),
+  decoration: BoxDecoration(
+    color: Color(0xFF14276b),
     borderRadius: BorderRadius.circular(15),
-        ),
-        child: Text(
-          'nome@gmail.com',
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.black, 
+  ),
+  child: Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      // Botão Editar
+      ElevatedButton.icon(
+        onPressed: () {},
+        icon: const Icon(Icons.edit, color: Colors.black),
+        label: const Text("Editar", style: TextStyle(color: Colors.black, fontSize: 20),),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white, // cor de fundo preto
+          padding: const EdgeInsets.symmetric(horizontal: 170, vertical: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
+      ),
+   SizedBox(height: 20,),
+      // Botão Configurações
+      ElevatedButton.icon(
+        onPressed: () {},
+        icon: const Icon(Icons.settings, color: Colors.black),
+        label: const Text("Configurações", style: TextStyle(color: Colors.black, fontSize: 20)),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 130, vertical: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      ),
+      SizedBox(height: 20,),
+      // Botão Carrinho
+      ElevatedButton.icon(
+        onPressed: () {},
+        icon: const Icon(Icons.shopping_cart, color: Colors.black),
+        label: const Text("Carrinho de compras", style: TextStyle(color: Colors.black, fontSize: 20)),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      ),
+    ],
   ),
-     SizedBox(height: 50), 
-  Container(
-
-  
-    padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 200),
-      decoration: BoxDecoration(
-    color: const Color.fromARGB(255, 185, 185, 185),
-    borderRadius: BorderRadius.circular(15),
-      ),
-      child: const Text(
-    'Editar',
-    style: TextStyle( 
-      fontSize: 25,
-      color: Colors.black,
-    ),
-  
-      ),
-  )
-          ],
 ),
-     
-           
-        ), 
+SizedBox(height: 50,),
+ElevatedButton.icon(
+        onPressed: () {},
+        icon: const Icon(Icons.logout, color: Colors.black),
+        label: const Text("Logout", style: TextStyle(color: Colors.black, fontSize: 20)),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 219, 58, 46),
+          padding: const EdgeInsets.symmetric(horizontal: 170, vertical: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      ),
+          ]
+        ),
+      ),   
       );
   }
 }
