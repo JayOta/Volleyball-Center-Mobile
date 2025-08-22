@@ -54,7 +54,7 @@ class _MenuBarFileState extends State<MenuBarFile> {
           ),
           BottomNavigationBarItem(
             icon:
-                Image.asset("assets/images/perfil.png", width: 30, height: 30),
+                Image.asset("assets/images/p.png", width: 30, height: 30),
             label: '',
           ),
         ],

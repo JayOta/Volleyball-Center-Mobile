@@ -1,18 +1,62 @@
 import 'package:flutter/material.dart';
-import 'menuBar.dart';
-
+import 'package:volleyball_center_mobile/loja.dart';
+import 'package:volleyball_center_mobile/main.dart';
+import 'package:volleyball_center_mobile/menuBar.dart';
+import 'package:volleyball_center_mobile/fundamentos.dart';
+import 'package:volleyball_center_mobile/noticias.dart';
+import 'package:volleyball_center_mobile/editar_perfil.dart';
 class Perfil extends StatefulWidget {
   const Perfil({super.key});
 
   @override 
   State<Perfil> createState() => _PerfilState();
+  
 }
 
 class _PerfilState extends State<Perfil> {
+
+    int _selectedIndex = 4; // Página inicial padrão
+
+  void _onItemSelected(int index) {
+    if (index == 4) {
+      // índice 4 é o botão perfil
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Perfil()),
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
+
+  Widget _buildBody() {
+    switch (_selectedIndex) {
+      case 0:
+        return Fundamentos();
+      case 1:
+        return Noticias();
+      case 2:
+        return HomePage();
+      case 3:
+        return Loja();
+      case 4:
+        return bodyContent();
+      default:
+        return HomePage();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      bottomNavigationBar: MenuBarFile(onItemSelected: _onItemSelected),
+      body: _buildBody());
+      }
+  }
+Widget bodyContent(){
+  return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center, // centraliza horizontalmente
           children: [
@@ -27,7 +71,22 @@ class _PerfilState extends State<Perfil> {
                 ),
               ),
             ),
-            SizedBox(height: 40), 
+            SizedBox(height: 30), 
+        Container(
+        padding: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+    color: const Color(0xFF14276B).withOpacity(0.6), // Cor de fundo com opacidade
+    borderRadius: BorderRadius.circular(15),
+        ),
+        child: Text(
+          'nome@gmail.com',
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.black, 
+          ),
+        ),
+  ),
+     SizedBox(height: 40), 
   Container(
   padding: const EdgeInsets.all(20),
   decoration: BoxDecoration(
@@ -39,7 +98,9 @@ class _PerfilState extends State<Perfil> {
     children: [
       // Botão Editar
       ElevatedButton.icon(
-        onPressed: () {},
+        onPressed: () {
+          
+  },
         icon: const Icon(Icons.edit, color: Colors.black),
         label: const Text("Editar", style: TextStyle(color: Colors.black, fontSize: 20),),
         style: ElevatedButton.styleFrom(
@@ -88,7 +149,7 @@ ElevatedButton.icon(
         label: const Text("Logout", style: TextStyle(color: Colors.black, fontSize: 20)),
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color.fromARGB(255, 219, 58, 46),
-          padding: const EdgeInsets.symmetric(horizontal: 170, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -96,7 +157,9 @@ ElevatedButton.icon(
       ),
           ]
         ),
-      ),   
-      );
+      );   
+      
   }
-}
+
+  
+
