@@ -31,7 +31,7 @@ class _MenuBarFileState extends State<MenuBarFile> {
         backgroundColor: const Color(0xFF14276b),
         selectedItemColor: const Color(0xFFFCCE00),
         unselectedItemColor: Colors.white70,
-        showSelectedLabels: false,
+        showSelectedLabels: true,
         showUnselectedLabels: false,
         items: [
           BottomNavigationBarItem(

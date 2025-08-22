@@ -31,38 +31,54 @@ class _LojaState extends State<Loja> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                cardProduct(context, "Bola de vôlei Penalty", "RS 249,99", "images/bola.jpg"),
+                cardProduct(context, "Bola de vôlei Penalty", "R\$ 249,99",
+                    "images/bola.jpg"),
                 SizedBox(
                   width: 60,
                 ),
-                cardProduct(context, "Tênis de vôlei", "RS 299,99", "images/tenis.jpg"),
+                cardProduct(context, "Tênis de vôlei", "R\$ 299,99",
+                    "images/tenis.jpg"),
               ],
             ),
             SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                cardProduct(context, "Joelheira", "RS 99,99", "images/joelheira.jpg"),
+                cardProduct(
+                    context, "Joelheira", "R\$ 99,99", "images/joelheira.jpg"),
                 SizedBox(
                   width: 60,
                 ),
-                cardProduct(context, "Manguito de Vôlei", "RS 39,99", "images/manguito.jpg"),
+                cardProduct(context, "Manguito de Vôlei", "R\$ 39,99",
+                    "images/manguito.jpg"),
               ],
             ),
             SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                cardProduct(context, "Meias", "RS29,99", 'images/meias.jpg'),
+                cardProduct(context, "Meias", "R\$29,99", 'images/meias.jpg'),
                 SizedBox(
                   width: 60,
                 ),
-                cardProduct(context,"Marcador de pontos", "RS 99,99", 'images/placar.jpg'),
+                cardProduct(context, "Marcador de pontos", "R\$ 99,99",
+                    'images/placar.jpg'),
               ],
             ),
             SizedBox(height: 40),
-            cardProduct(context,"Faixa", "RS 29,99", 'images/faixa.jpg'),
+            cardProduct(context, "Faixa", "R\$ 29,99", 'images/faixa.jpg'),
             SizedBox(height: 20),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     cardProduct2(context, "Meias", "R\$29,99", 'images/meias.jpg'),
+            //     SizedBox(
+            //       width: 60,
+            //     ),
+            //     cardProduct2(context, "Marcador de pontos", "R\$ 99,99",
+            //         'images/placar.jpg'),
+            //   ],
+            // ),
           ],
         ),
       ),
@@ -81,7 +97,8 @@ Text textCreator(String text) {
   );
 }
 
-Center cardProduct(BuildContext context, String nome, String preco, String imagem) {
+Center cardProduct(
+    BuildContext context, String nome, String preco, String imagem) {
   return Center(
     child: Card(
       elevation: 4,
@@ -148,25 +165,102 @@ Center cardProduct(BuildContext context, String nome, String preco, String image
                 ),
               ),
               onPressed: () {
-              Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ProdutoPage(
-                          produto: {
-                          'nome': nome,
-                          'preco': preco,
-                          'imagem': imagem,   
-                          'descricao': 'Descrição do produto', // ou deixe vazia se não tiver
-                          'categorias_id': 1,
-                        },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProdutoPage(
+                            produto: {
+                              'nome': nome,
+                              'preco': preco,
+                              'imagem': imagem,
+                              'descricao':
+                                  'Descrição do produto', // ou deixe vazia se não tiver
+                              'categorias_id': 1,
+                            },
                           )),
-              );
+                );
               },
               child: Text(
                 "Comprar",
                 style: TextStyle(color: Colors.white),
-                
               ),
             ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+// ignore: dead_code
+TextButton cardProduct2(
+    BuildContext context, String nome, String preco, String imagem) {
+  return TextButton(
+    style: ButtonStyle(
+      overlayColor: WidgetStatePropertyAll(Colors.transparent),
+    ),
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProdutoPage(
+                  produto: {
+                    'nome': nome,
+                    'preco': preco,
+                    'imagem': imagem,
+                    'descricao':
+                        'Descrição do produto', // ou deixe vazia se não tiver
+                    'categorias_id': 1,
+                  },
+                )),
+      );
+    },
+    child: Center(
+      child: Container(
+        width: 160,
+        height: 250,
+        padding: EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Imagem do produto
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SizedBox(
+                height: 120,
+                width: double.infinity,
+                child: Image.asset(
+                  imagem,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(height: 6),
+
+            // Nome do produto
+// Nome do produto
+            Text(
+              nome,
+              style: TextStyle(fontSize: 14, color: Colors.black),
+              maxLines: 2, // 🔥 permite até 2 linhas
+              softWrap: true, // 🔥 quebra a linha se passar
+            ),
+
+            SizedBox(height: 2),
+
+            // Preço do produto
+            Text(
+              preco,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.green[700],
+                fontSize: 18,
+              ),
+            ),
+
+            Spacer(), // 🔥 empurra o botão pra baixo
+
+            // Botão de compra
           ],
         ),
       ),
