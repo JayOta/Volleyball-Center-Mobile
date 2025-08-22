@@ -12,6 +12,7 @@ class ProdutoPage extends StatefulWidget {
 
 class _ProdutoPageState extends State<ProdutoPage> {
   int quantidade = 0;
+  String? tamanhoSelecionado;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
               'Produtos de Edição Limitada Verão',
               style:TextStyle(color: Color(0xFF14276B), fontSize: 25),),  
             SizedBox(height: 40,),  
-            Image.asset(produto['imagem'], height: 180),
+            Image.asset(produto['imagem'], width: double.infinity, fit: BoxFit.cover),
             const SizedBox(height: 20),
             Row(
               children: [
@@ -50,9 +51,13 @@ class _ProdutoPageState extends State<ProdutoPage> {
               children: [   
             // Tamanhos
             Text('Tamanhos', style: Theme.of(context).textTheme.titleMedium),
-            Wrap(
-              spacing: 6,
-              children: _buildTamanhos(produto['categorias_id']),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Wrap(
+                spacing: 6,
+                runSpacing: 6,
+                children: _buildTamanhos(produto['categorias_id']),
+              ),
             ),]
             ),
         
@@ -107,14 +112,37 @@ class _ProdutoPageState extends State<ProdutoPage> {
   List<Widget> _buildTamanhos(int categoriaId) {
     if (categoriaId == 1) {
       return ['37', '38', '39', '40', '41', '42', '43']
-          .map((size) => Chip(label: Text(size)))
+          .map((size) => _buildTamanhoButton(size))
           .toList();
     } else if ([2, 3, 4].contains(categoriaId)) {
       return ['PP', 'P', 'M', 'G', 'GG']
-          .map((size) => Chip(label: Text(size)))
+          .map((size) => _buildTamanhoButton(size))
           .toList();
     } else {
       return [const Text('Sem tamanhos disponíveis')];
     }
+  }
+
+  Widget _buildTamanhoButton(String size) {
+    final bool isSelected = tamanhoSelecionado == size;
+    return TextButton(
+      onPressed: () {
+        setState(() {
+          tamanhoSelecionado = size;
+        });
+      },
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        backgroundColor: isSelected ? Theme.of(context).colorScheme.primary : Colors.grey.shade200,
+        foregroundColor: isSelected ? Colors.white : Colors.black,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(
+            color: isSelected ? Theme.of(context).colorScheme.primary : Colors.grey.shade400,
+          ),
+        ),
+      ),
+      child: Text(size),
+    );
   }
 }
