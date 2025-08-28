@@ -85,7 +85,7 @@ Widget bodyContent(BuildContext context) {
 
         // Container dos botões
         Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: const Color(0xFF14276b),
             borderRadius: BorderRadius.circular(15),
@@ -102,7 +102,8 @@ Widget bodyContent(BuildContext context) {
                   );
                 },
                 icon: const Icon(Icons.edit, color: Colors.black),
-                label: const Text("Editar", style: TextStyle(color: Colors.black, fontSize: 20)),
+                label: const Text("Editar", style: TextStyle( color: Colors.black, fontSize: 20)),
+                
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 170, vertical: 20),
@@ -132,6 +133,7 @@ Widget bodyContent(BuildContext context) {
                 icon: const Icon(Icons.shopping_cart, color: Colors.black),
                 label: const Text("Carrinho de compras", style: TextStyle(color: Colors.black, fontSize: 20)),
                 style: ElevatedButton.styleFrom(
+                   alignment: Alignment.centerLeft,
                   backgroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
                   shape: RoundedRectangleBorder(
