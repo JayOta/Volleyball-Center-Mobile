@@ -101,12 +101,13 @@ Widget bodyContent(BuildContext context) {
                     ),
                   );
                 },
-                icon: const Icon(Icons.edit, color: Colors.black),
+                icon: const Icon(Icons.edit, color: Colors.black, size: 28,),
                 label: const Text("Editar", style: TextStyle( color: Colors.black, fontSize: 20)),
                 
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 170, vertical: 20),
+       
+                  padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -116,11 +117,11 @@ Widget bodyContent(BuildContext context) {
 
               ElevatedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.settings, color: Colors.black),
+                icon: const Icon(Icons.settings, color: Colors.black,  size: 28,),
                 label: const Text("Configurações", style: TextStyle(color: Colors.black, fontSize: 20)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 130, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 110, vertical: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -130,12 +131,11 @@ Widget bodyContent(BuildContext context) {
 
               ElevatedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.shopping_cart, color: Colors.black),
+                icon: const Icon(Icons.shopping_cart, color: Colors.black, size: 28,),
                 label: const Text("Carrinho de compras", style: TextStyle(color: Colors.black, fontSize: 20)),
                 style: ElevatedButton.styleFrom(
-                   alignment: Alignment.centerLeft,
                   backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -149,11 +149,11 @@ Widget bodyContent(BuildContext context) {
 
         ElevatedButton.icon(
           onPressed: () {},
-          icon: const Icon(Icons.logout, color: Colors.black),
+          icon: const Icon(Icons.logout, color: Colors.black,),
           label: const Text("Logout", style: TextStyle(color: Colors.black, fontSize: 20)),
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color.fromARGB(255, 219, 58, 46),
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 15),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),

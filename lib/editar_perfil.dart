@@ -103,11 +103,11 @@ Widget bodyContent(BuildContext context) {
                     ),
                   );
                 },
-                icon: const Icon(Icons.edit, color: Colors.black),
+                icon: const Icon(Icons.edit, color: Colors.black, size: 28,),
                 label: const Text("Nome", style: TextStyle(color: Colors.black, fontSize: 20)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 180, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -117,11 +117,11 @@ Widget bodyContent(BuildContext context) {
 
               ElevatedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.edit, color: Colors.black),
+                icon: const Icon(Icons.edit, color: Colors.black, size: 28,),
                 label: const Text("nome@gmail.com", style: TextStyle(color: Colors.black, fontSize: 20)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 130, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -131,11 +131,11 @@ Widget bodyContent(BuildContext context) {
               const SizedBox(height: 20),
               ElevatedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.save, color: Colors.black),
+                icon: const Icon(Icons.save, color: Colors.black, size: 28,),
                 label: const Text("Salvar", style: TextStyle(color: Colors.black, fontSize: 20)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 180, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

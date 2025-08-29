@@ -70,7 +70,13 @@ class _FundamentosState extends State<Fundamentos> {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: [const SizedBox(height: 20),
+          const Center(   
+            child: Text(
+                "Fundamentos",
+                style: TextStyle(color: Color(0xFF14276B), fontSize: 25),
+              ),
+            ),
           const SizedBox(height: 20),
           container("Saque",
               "O saque é a ação que inicia cada rally (jogo de pontos) e consiste em lançar a bola por cima do seu corpo e golpeá-la para que ela atravessar a rede e caia na quadra adversária."),
