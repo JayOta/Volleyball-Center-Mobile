@@ -10,7 +10,7 @@ class Navbaradmin extends StatelessWidget implements PreferredSizeWidget {
     return Container(
   width: double.infinity,
   height: preferredSize.height,
-  color: Colors.black, // fundo preto só pra teste
+  decoration: const BoxDecoration(color: Color(0xFF14276b)), // fundo preto só pra teste
   child: Center(
     child: SvgPicture.asset(
       'assets/SvgPicture/logo.svg',
