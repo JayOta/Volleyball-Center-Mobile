@@ -10,6 +10,7 @@ import 'package:volleyball_center_mobile/noticias.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'perfil.dart';
 
 
@@ -50,19 +51,34 @@ class AppWidget extends StatefulWidget {
 class _AppWidgetState extends State<AppWidget> {
   int _selectedIndex = 2; // Página inicial padrão
 
-  void _onItemSelected(int index) {
-    if (index == 4) {
-      // índice 4 é o botão perfil
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Perfil()),
-      );
-    } else {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
+  void abrirPerfil(BuildContext context) {
+  final user = FirebaseAuth.instance.currentUser;
+
+  if (user != null) {
+    // Usuário logado → abrir Perfil
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Perfil()),
+    );
+  } else {
+    // Usuário não logado → abrir Login
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const Login()),
+    );
   }
+}
+
+void _onItemSelected(int index) {
+  if (index == 4) {
+    abrirPerfil(context);
+  } else {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +99,6 @@ class _AppWidgetState extends State<AppWidget> {
         return HomePage();
       case 3:
         return Loja();
-      case 5:
-        return Noticias();
       default:
         return Container();
     }

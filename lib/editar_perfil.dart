@@ -1,153 +1,157 @@
 import 'package:flutter/material.dart';
-import 'package:volleyball_center_mobile/loja.dart';
-import 'package:volleyball_center_mobile/main.dart';
-import 'package:volleyball_center_mobile/menuBar.dart';
-import 'package:volleyball_center_mobile/fundamentos.dart';
-import 'package:volleyball_center_mobile/noticias.dart';
-import 'package:volleyball_center_mobile/editar_perfil.dart';
+import 'package:volleyball_center_mobile/services/auth_service.dart';
 
 class EditarPerfil extends StatefulWidget {
-  const EditarPerfil({super.key});
+  final String nomeAtual;
+  final String emailAtual;
 
-  @override 
-  State<EditarPerfil> createState() => _PerfilState();
+  const EditarPerfil({
+    super.key,
+    required this.nomeAtual,
+    required this.emailAtual,
+  });
+
+  @override
+  State<EditarPerfil> createState() => _EditarPerfilState();
 }
 
-class _PerfilState extends State<EditarPerfil> {
-  int _selectedIndex = 4; // Página inicial padrão
+class _EditarPerfilState extends State<EditarPerfil> {
+  late TextEditingController _nomeController;
+  late TextEditingController _emailController;
+  final AuthService _authService = AuthService();
 
-  void _onItemSelected(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nomeController = TextEditingController(text: widget.nomeAtual);
+    _emailController = TextEditingController(text: widget.emailAtual);
   }
 
-  Widget _buildBody() {
-    switch (_selectedIndex) {
-      case 0:
-        return Fundamentos();
-      case 1:
-        return Noticias();
-      case 2:
-        return HomePage();
-      case 3:
-        return Loja();
-      case 4:
-        return bodyContent(context);
-      default:
-        return HomePage();
+  @override
+  void dispose() {
+    _nomeController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _salvarAlteracoes() async {
+    setState(() => _loading = true);
+
+    try {
+      final novoNome = _nomeController.text.trim();
+      final novoEmail = _emailController.text.trim();
+
+      // 🔹 Atualiza o nome no Auth e Firestore
+      if (novoNome.isNotEmpty && novoNome != widget.nomeAtual) {
+        await _authService.updateDisplayName(novoNome);
+      }
+
+      // 🔹 Atualiza o email no Firestore (não dá para mudar diretamente no Auth sem reautenticação)
+      if (novoEmail.isNotEmpty && novoEmail != widget.emailAtual) {
+        await _authService.updateUserProfile({"email": novoEmail});
+      }
+
+      // 🔹 Retorna os dados atualizados para o perfil.dart
+      if (mounted) {
+        Navigator.pop(context, {"nome": novoNome, "email": novoEmail});
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Erro ao salvar: $e")),
+      );
+    } finally {
+      if (mounted) setState(() => _loading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MenuBarFile(onItemSelected: _onItemSelected),
-      body: _buildBody(),
+      appBar: AppBar(title: const Text("Editar Perfil")),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            const SizedBox(height: 50),
+
+            // Campo Nome no estilo de botão
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.person, color: Colors.black, size: 28),
+              label: SizedBox(
+                width: 200,
+                child: TextField(
+                  controller: _nomeController,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Digite seu nome",
+                  ),
+                  style: const TextStyle(color: Colors.black, fontSize: 20),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Campo Email no estilo de botão
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.email, color: Colors.black, size: 28),
+              label: SizedBox(
+                width: 200,
+                child: TextField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Digite seu email",
+                  ),
+                  style: const TextStyle(color: Colors.black, fontSize: 20),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 40),
+
+            // Botão Salvar
+            ElevatedButton.icon(
+              onPressed: _loading ? null : _salvarAlteracoes,
+              icon: const Icon(Icons.save, color: Colors.black, size: 28),
+              label: _loading
+                  ? const CircularProgressIndicator(color: Colors.black)
+                  : const Text(
+                      "Salvar",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
-}
-
-Widget bodyContent(BuildContext context) {
-  return SingleChildScrollView(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(height: 80),
-        Center( 
-          child: SizedBox(
-            width: 150, height: 150,
-            child: Image.asset(
-              "assets/images/perfil.png",
-              fit: BoxFit.fill,
-              color: const Color(0xFF14276b),
-            ),
-            
-          ),
-        ),
-        const SizedBox(height: 20), 
-        const Text(
-          'Nome',
-          style: TextStyle(fontSize: 22, color: Colors.black87),
-        ),
-        const SizedBox(height: 30), 
-        Container(
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            color: const Color(0xFF14276B).withOpacity(0.6),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: const Text(
-            'nome@gmail.com',
-            style: TextStyle(fontSize: 20, color: Colors.black),
-          ),
-        ),
-        const SizedBox(height: 40), 
-        // Container dos botões
-        Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 20), 
-        child:Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: const Color(0xFF14276b),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Column(
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const EditarPerfil(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.edit, color: Colors.black, size: 28,),
-                label: const Text("Nome", style: TextStyle(color: Colors.black, fontSize: 20)),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              ElevatedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.edit, color: Colors.black, size: 28,),
-                label: const Text("nome@gmail.com", style: TextStyle(color: Colors.black, fontSize: 20)),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-          
-              const SizedBox(height: 20),
-              ElevatedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.save, color: Colors.black, size: 28,),
-                label: const Text("Salvar", style: TextStyle(color: Colors.black, fontSize: 20)),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-          
-            ],
-          ),
-        ),
-        ),
-      ]
-    ),
-  );
-
 }
