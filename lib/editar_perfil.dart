@@ -72,7 +72,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
           "Editar Perfil",
           style: TextStyle(
             fontSize: 28,
-            fontWeight: FontWeight.bold,
+            color: const Color(0xFF14276b),
           ),
         ),
       ),
@@ -163,7 +163,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                       ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 25),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
