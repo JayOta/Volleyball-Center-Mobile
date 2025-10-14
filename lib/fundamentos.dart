@@ -36,7 +36,8 @@ class _FundamentosState extends State<Fundamentos> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Expanded(
+        child: Scaffold(
       body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -63,20 +64,21 @@ class _FundamentosState extends State<Fundamentos> {
           ),
         ],
       ),
-    );
+    ));
   }
 
   Widget _buildFundamentosContent() {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [const SizedBox(height: 20),
-          const Center(   
+        children: [
+          const SizedBox(height: 20),
+          const Center(
             child: Text(
-                "Fundamentos",
-                style: TextStyle(color: Color(0xFF14276B), fontSize: 25),
-              ),
+              "Fundamentos",
+              style: TextStyle(color: Color(0xFF14276B), fontSize: 25),
             ),
+          ),
           const SizedBox(height: 20),
           container("Saque",
               "O saque é a ação que inicia cada rally (jogo de pontos) e consiste em lançar a bola por cima do seu corpo e golpeá-la para que ela atravessar a rede e caia na quadra adversária."),

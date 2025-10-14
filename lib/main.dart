@@ -1,6 +1,7 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors, avoid_unnecessary_containers, sized_box_for_whitespace, deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:volleyball_center_mobile/admin.dart';
 import 'package:volleyball_center_mobile/login.dart';
 import 'package:volleyball_center_mobile/loja.dart';
 import 'package:volleyball_center_mobile/fundamentos.dart';
@@ -13,7 +14,8 @@ import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'perfil.dart';
 
-
+// NOVO: Importando a página Admin e as constantes
+import 'package:volleyball_center_mobile/utils/constants.dart'; // Certifique-se que este arquivo exista
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AppWidget(title: 'Volleyball Center'), // Ajuste aqui
+      home: AppWidget(title: 'Volleyball Center'),
     );
   }
 }
@@ -49,46 +51,102 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
-  int _selectedIndex = 2; // Página inicial padrão
+  int _selectedIndex = 2; // Página inicial padrão (Home)
 
-  void abrirPerfil(BuildContext context) {
-  final user = FirebaseAuth.instance.currentUser;
-
-  if (user != null) {
-    // Usuário logado → abrir Perfil
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const Perfil()),
-    );
-  } else {
-    // Usuário não logado → abrir Login
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const Login()),
-    );
+  // --- Lógica de Verificação de Admin ---
+  bool _isAdmin() {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    // Retorna true se estiver logado E o UID corresponder ao UID Admin
+    return currentUser != null && currentUser.uid == ADMIN_UID;
   }
-}
 
-void _onItemSelected(int index) {
-  if (index == 4) {
-    abrirPerfil(context);
-  } else {
-    setState(() {
-      _selectedIndex = index;
-    });
+  // NOVO: Widget do Botão Admin
+  Widget _buildAdminButton(BuildContext context) {
+    if (_isAdmin()) {
+      return IconButton(
+        icon: const Icon(Icons.admin_panel_settings,
+            color: Colors.white, size: 28),
+        tooltip: 'Acesso Admin',
+        onPressed: () {
+          // Navega para a tela de Administração
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Admin()),
+          );
+        },
+      );
+    }
+    return const SizedBox.shrink(); // Não mostra nada se não for Admin
   }
-}
+  // ----------------------------------------
 
+  // 🔥 FUNÇÃO DE NAVEGAÇÃO CENTRALIZADA
+  void _onItemSelected(int index) {
+    // Se for o ícone de Perfil (index 4)
+    if (index == 4) {
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        // Usuário logado: troca o body para a tela Perfil
+        setState(() {
+          _selectedIndex = index;
+        });
+      } else {
+        // Usuário não logado: navega para a tela de Login (push, não troca o body)
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Login()),
+        );
+      }
+    } else {
+      // Para outras páginas (0, 1, 2, 3), troca o body normalmente
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const Navbar(),
-      body: _buildBody(_selectedIndex), // Exibe a página selecionada
+      // AppBar é persistente
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF14276b), // Cor azul (Cor da Navbar)
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/logo.png', // Ajuste para o caminho da sua logo
+              width: 40,
+              height: 40,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: const Text(
+                'Volleyball Center',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          _buildAdminButton(context), // Botão Admin condicional
+          const Padding(
+            padding: EdgeInsets.only(right: 16.0),
+            child: Icon(Icons.notifications_none, color: Colors.white),
+          ),
+        ],
+      ),
+      // Body muda conforme o item selecionado
+      body: _buildBody(_selectedIndex),
+      // bottomNavigationBar é persistente
       bottomNavigationBar: MenuBarFile(onItemSelected: _onItemSelected),
     );
   }
 
+  // 🔥 _buildBody AGORA INCLUI A PÁGINA PERFIL (index 4)
   Widget _buildBody(int index) {
     switch (index) {
       case 0:
@@ -99,6 +157,8 @@ void _onItemSelected(int index) {
         return HomePage();
       case 3:
         return Loja();
+      case 4:
+        return const Perfil(); // Retorna o widget Perfil diretamente no body
       default:
         return Container();
     }
@@ -107,6 +167,10 @@ void _onItemSelected(int index) {
 
 // Exemplo de páginas (substitua pelas suas próprias páginas)
 class HomePage extends StatefulWidget {
+//... (Mantenha o código da HomePage, _HomePageState, mainCard, imageCarousel, etc. abaixo)
+//...
+//...
+//...
   const HomePage({super.key});
 
   @override
@@ -121,27 +185,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Container(
-            color: Color(0xFFFFCCE00),
-            width: double.infinity,
-            height: 80,
-          ),
-          SizedBox(
-            height: 50,
-          ),
           TextButton(
             style: ButtonStyle(
               splashFactory: NoSplash.splashFactory,
               overlayColor: MaterialStateProperty.all(Colors.transparent),
             ),
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Noticias()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const Noticias()));
             },
             child: Column(
               children: [
                 mainCard(),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -150,13 +206,13 @@ class _HomePageState extends State<HomePage> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        "images/jogo-2.jpg",
+                        "assets/images/jogo-2.jpg",
                         width: 165,
                         height: 100,
                         fit: BoxFit.cover,
                       ),
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
@@ -172,28 +228,28 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
 
-          SizedBox(
+          const SizedBox(
             height: 80,
           ),
           // centerContainer(),
           Container(
-            color: Color(0xFF14276b),
+            color: const Color(0xFF14276b),
             height: 500,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                       left: 53), // ajuste esse valor como quiser
-                  child: Container(
+                  child: SizedBox(
                     width: 300, // aumentei um pouco para caber melhor
                     child: RichText(
-                      text: TextSpan(
+                      text: const TextSpan(
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -216,38 +272,27 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 imageCarousel([
-                  "images/viseira-nike.png",
+                  "assets/images/viseira-nike.png",
                   "assets/images/tenis.jpg",
                   "assets/images/meias.jpg",
-                  "images/meias-nike.png",
+                  "assets/images/meias-nike.png",
                 ]),
-                // Container(
-                //   width: 500,
-                //   padding: EdgeInsets.all(15),
-                //   child: Image.asset(
-                //     'assets/images/jogo-3.jpg',
-                //     width: 400,
-                //     height: 300,
-                //     fit: BoxFit.cover,
-                //   ),
-                // )
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 80,
           ),
 
-          Text(
+          const Text(
             "Mais conteúdo em breve..",
             style: TextStyle(fontSize: 25),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
         ]),
@@ -283,7 +328,7 @@ class _HomePageState extends State<HomePage> {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
@@ -291,7 +336,7 @@ class _HomePageState extends State<HomePage> {
                       BoxShadow(
                         color: Colors.black.withOpacity(0.50),
                         blurRadius: 6,
-                        offset: Offset(0, 5),
+                        offset: const Offset(0, 5),
                       ),
                     ],
                   ),
@@ -318,7 +363,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 width: 10.0,
                 height: 10.0,
-                margin: EdgeInsets.symmetric(horizontal: 4.0),
+                margin: const EdgeInsets.symmetric(horizontal: 4.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _currentCarouselIndex == entry.key
@@ -337,7 +382,7 @@ class _HomePageState extends State<HomePage> {
     return TextButton(
       onPressed: () {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Login()));
+            .push(MaterialPageRoute(builder: (context) => const Login()));
       },
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all(
@@ -345,13 +390,13 @@ class _HomePageState extends State<HomePage> {
         ),
         shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-        side:
-            WidgetStatePropertyAll(BorderSide(color: Colors.white, width: 1.8)),
+        side: const WidgetStatePropertyAll(
+            BorderSide(color: Colors.white, width: 1.8)),
       ),
       child: Text(
         text,
         textDirection: TextDirection.ltr,
-        style: TextStyle(
+        style: const TextStyle(
             color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400),
       ),
     );
@@ -360,7 +405,7 @@ class _HomePageState extends State<HomePage> {
 
 Container centerContainer() {
   return Container(
-    color: Color(0xFF14276b),
+    color: const Color(0xFF14276b),
     width: double.infinity,
     height: 300,
     child: Row(
@@ -371,17 +416,17 @@ Container centerContainer() {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 200,
                 child: Text(
                   'VENHA VER NOSSOS PRODUTOS!',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Wrap(
+              const Wrap(
                 children: [
                   Text(
                     'Meias Nike ',
@@ -393,25 +438,26 @@ Container centerContainer() {
                   ),
                 ],
               ),
-              Text(
+              const Text(
                 'RS60,00!!',
                 style: TextStyle(color: Colors.white, fontSize: 17),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               TextButton(
                   style: ButtonStyle(
                     shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6))),
-                    backgroundColor: WidgetStatePropertyAll(Color(0xffffcce00)),
+                    backgroundColor:
+                        const WidgetStatePropertyAll(Color(0xffffcce00)),
                   ),
                   onPressed: () {},
-                  child: Text('Saiba mais')),
+                  child: const Text('Saiba mais')),
             ],
           ),
         ), //
-        Spacer(),
+        const Spacer(),
         Container(
           child: Image.asset(
             "assets/images/jogo-3.jpg",
@@ -437,7 +483,7 @@ Column mainCard() {
             color: Colors.black.withOpacity(0.4),
             blurRadius: 8,
             spreadRadius: 2,
-            offset: Offset(4, 4),
+            offset: const Offset(4, 4),
           ),
         ],
       ),
@@ -447,7 +493,7 @@ Column mainCard() {
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Image.asset(
-              'images/jogo-1.jpg',
+              'assets/images/jogo-1.jpg',
               width: 342,
               height: 220,
               fit: BoxFit.cover,
@@ -465,7 +511,7 @@ Column mainCard() {
           ),
 
           // Texto por cima
-          Positioned(
+          const Positioned(
             bottom: 10,
             left: 10,
             right: 10,

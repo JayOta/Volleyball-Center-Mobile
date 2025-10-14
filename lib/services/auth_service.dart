@@ -16,24 +16,22 @@ class AuthService {
       String email, String password,
       {String? displayName}) async {
     try {
-      print('Tentando criar usuário com email: $email'); // Debug log
+      // Debug log
 
       UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      print('Usuário criado com sucesso: ${result.user?.uid}'); // Debug log
+      // Debug log
 
       if (result.user != null) {
         // 1. Definir displayName no Authentication primeiro
         if (displayName != null && displayName.isNotEmpty) {
-          print(
-              'Definindo displayName no Authentication: $displayName'); // Debug log
+          // Debug log
           await result.user!.updateDisplayName(displayName);
           await result.user!.reload();
-          print(
-              'DisplayName definido com sucesso no Authentication'); // Debug log
+          // Debug log
         }
 
         // 2. Criar perfil no Firestore (com retry em caso de falha)
@@ -44,10 +42,9 @@ class AuthService {
               name: displayName,
               email: email,
             );
-            print('Perfil criado com sucesso no Firestore'); // Debug log
+            // Debug log
           } catch (firestoreError) {
-            print(
-                'Erro ao criar perfil no Firestore (não crítico): $firestoreError'); // Debug log
+            // Debug log
             // Não falha todo o processo se Firestore der erro
             // O usuário ainda pode fazer login e o perfil pode ser criado depois
           }
@@ -56,10 +53,10 @@ class AuthService {
 
       return result;
     } on FirebaseAuthException catch (e) {
-      print('FirebaseAuthException: ${e.code} - ${e.message}'); // Debug log
+      // Debug log
       throw _handleAuthException(e);
     } catch (e) {
-      print('Erro geral: $e'); // Debug log
+      // Debug log
       throw 'Erro inesperado ao criar conta: $e';
     }
   }
@@ -68,14 +65,14 @@ class AuthService {
   Future<UserCredential?> signInWithEmailAndPassword(
       String email, String password) async {
     try {
-      print('Tentando fazer login com email: $email'); // Debug log
+      // Debug log
 
       UserCredential result = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      print('Login realizado com sucesso: ${result.user?.uid}'); // Debug log
+      // Debug log
 
       // Verificar se o usuário existe no Firestore, se não, criar
       if (result.user != null) {
@@ -86,18 +83,16 @@ class AuthService {
             name: result.user!.displayName ?? 'Usuário',
             email: result.user!.email ?? email,
           );
-          print(
-              'Perfil criado no Firestore para usuário existente'); // Debug log
+          // Debug log
         }
       }
 
       return result;
     } on FirebaseAuthException catch (e) {
-      print(
-          'FirebaseAuthException no login: ${e.code} - ${e.message}'); // Debug log
+      // Debug log
       throw _handleAuthException(e);
     } catch (e) {
-      print('Erro geral no login: $e'); // Debug log
+      // Debug log
       throw 'Erro inesperado no login: $e';
     }
   }
@@ -106,17 +101,23 @@ class AuthService {
   Future<void> signOut() async {
     try {
       await _auth.signOut();
-      print('Logout realizado com sucesso'); // Debug log
+      // Debug log
     } catch (e) {
-      print('Erro no logout: $e'); // Debug log
+      // Debug log
       throw 'Erro ao fazer logout: $e';
     }
   }
 
-  // Atualizar nome do usuário
+  // RENOMEADO: Método updateUserName para corresponder à chamada no editar_perfil.dart
+  Future<void> updateUserName(String newName) async {
+    // Reutiliza a lógica existente, garantindo a atualização em Auth e Firestore
+    return updateDisplayName(newName);
+  }
+
+  // Lógica de atualização de nome (método original)
   Future<void> updateDisplayName(String displayName) async {
     try {
-      print('Atualizando nome do usuário para: $displayName'); // Debug log
+      // Debug log
 
       if (currentUser == null) {
         throw 'Usuário não está logado';
@@ -125,7 +126,7 @@ class AuthService {
       // Atualizar no Authentication
       await currentUser!.updateDisplayName(displayName);
       await currentUser!.reload(); // Recarrega os dados do usuário
-      print('DisplayName atualizado no Authentication'); // Debug log
+      // Debug log
 
       // Verificar se o perfil existe no Firestore
       bool userExists = await _firestoreService.userExists(currentUser!.uid);
@@ -136,7 +137,7 @@ class AuthService {
           uid: currentUser!.uid,
           updates: {'name': displayName},
         );
-        print('Nome atualizado no Firestore'); // Debug log
+        // Debug log
       } else {
         // Se não existe, criar perfil completo
         await _firestoreService.createUserProfile(
@@ -144,29 +145,117 @@ class AuthService {
           name: displayName,
           email: currentUser!.email ?? 'email@desconhecido.com',
         );
-        print('Perfil criado no Firestore com nome atualizado'); // Debug log
+        // Debug log
       }
 
-      print(
-          'Nome atualizado com sucesso em Authentication e Firestore'); // Debug log
+      // Debug log
     } catch (e) {
-      print('Erro ao atualizar nome: $e'); // Debug log
+      // Debug log
       throw 'Erro ao atualizar nome: $e';
     }
   }
 
-  // Redefinir senha
-  Future<void> sendPasswordResetEmail(String email) async {
+  // NOVO: Atualizar EMAIL do Usuário
+  Future<void> updateUserEmail(String newEmail) async {
     try {
-      print('Enviando email de redefinição para: $email'); // Debug log
-      await _auth.sendPasswordResetEmail(email: email);
-      print('Email de redefinição enviado com sucesso'); // Debug log
+      // Debug log
+
+      if (currentUser == null) {
+        throw 'Usuário não está logado';
+      }
+
+      // 1. Atualizar no Firebase Authentication
+      await currentUser!.updateEmail(newEmail);
+      await currentUser!.reload();
+      // Debug log
+
+      // 2. Atualizar no Firestore
+      await _firestoreService.updateUserProfile(
+        uid: currentUser!.uid,
+        updates: {'email': newEmail},
+      );
+      // Debug log
+
+      // Debug log
     } on FirebaseAuthException catch (e) {
-      print(
-          'FirebaseAuthException no reset: ${e.code} - ${e.message}'); // Debug log
+      // Debug log
       throw _handleAuthException(e);
     } catch (e) {
-      print('Erro geral no reset: $e'); // Debug log
+      // Debug log
+      throw 'Erro ao atualizar email: $e';
+    }
+  }
+
+  // NOVO: Método para Reautenticar o usuário
+  Future<void> reauthenticateUser(String password) async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      throw 'Usuário não está logado.';
+    }
+
+    if (user.email == null) {
+      throw 'Não é possível reautenticar. O usuário não possui um email.';
+    }
+
+    try {
+      // Debug log
+
+      // Cria a credencial usando o email e a senha fornecida
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: password,
+      );
+
+      // Tenta reautenticar o usuário atual
+      await user.reauthenticateWithCredential(credential);
+
+      // Debug log
+    } on FirebaseAuthException catch (e) {
+      // Debug log
+      // Lançamos a exceção tratada para que o widget possa exibir a mensagem
+      throw _handleAuthException(e);
+    } catch (e) {
+      // Debug log
+      throw 'Erro inesperado na reautenticação: $e';
+    }
+  }
+
+  // NOVO: Atualizar SENHA do Usuário
+  Future<void> updatePassword(String newPassword) async {
+    try {
+      // Debug log
+
+      if (currentUser == null) {
+        throw 'Usuário não está logado';
+      }
+
+      // O Firebase tratará a reautenticação se necessária.
+      await currentUser!.updatePassword(newPassword);
+      // Debug log
+    } on FirebaseAuthException catch (e) {
+      // Debug log
+      if (e.code == 'requires-recent-login') {
+        // Mensagem clara para o usuário
+        throw 'Sua sessão expirou. Por favor, saia (logout) e entre (login) novamente para alterar sua senha.';
+      }
+      throw _handleAuthException(e);
+    } catch (e) {
+      // Debug log
+      throw 'Erro ao atualizar senha: $e';
+    }
+  }
+
+  // Redefinir senha (Enviar email de reset)
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      // Debug log
+      await _auth.sendPasswordResetEmail(email: email);
+      // Debug log
+    } on FirebaseAuthException catch (e) {
+      // Debug log
+      throw _handleAuthException(e);
+    } catch (e) {
+      // Debug log
       throw 'Erro inesperado ao enviar email: $e';
     }
   }
@@ -174,29 +263,28 @@ class AuthService {
   // Buscar perfil completo do usuário do Firestore
   Future<Map<String, dynamic>?> getUserProfile() async {
     try {
-      print('AuthService: Buscando perfil do usuário...'); // Debug log
+      // Debug log
 
       if (currentUser == null) {
-        print('AuthService: Usuário não está logado'); // Debug log
+        // Debug log
         return null;
       }
 
-      print('AuthService: UID do usuário: ${currentUser!.uid}'); // Debug log
+      // Debug log
 
       final profile = await _firestoreService.getUserProfile(currentUser!.uid);
 
-      print('AuthService: Perfil retornado: $profile'); // Debug log
+      // Debug log
 
       return profile;
     } catch (e) {
-      print('AuthService: Erro ao buscar perfil do usuário: $e'); // Debug log
-      print(
-          'AuthService: Stack trace: ${StackTrace.current}'); // Debug stack trace
+      // Debug log
+      // Debug stack trace
       return null;
     }
   }
 
-  // Atualizar perfil completo
+  // Atualizar perfil completo (Chama o método do FirestoreService)
   Future<void> updateUserProfile(Map<String, dynamic> updates) async {
     try {
       if (currentUser != null) {
@@ -206,14 +294,14 @@ class AuthService {
         );
       }
     } catch (e) {
-      print('Erro ao atualizar perfil: $e'); // Debug log
+      // Debug log
       throw 'Erro ao atualizar perfil: $e';
     }
   }
 
   // Tratamento de exceções do Firebase Auth
   String _handleAuthException(FirebaseAuthException e) {
-    print('Tratando erro Firebase: ${e.code}'); // Debug log
+    // Debug log
 
     switch (e.code) {
       case 'weak-password':
@@ -237,7 +325,7 @@ class AuthService {
       case 'invalid-credential':
         return 'Credenciais inválidas. Verifique email e senha.';
       default:
-        print('Código de erro não tratado: ${e.code}'); // Debug log
+        // Debug log
         return 'Erro de autenticação: ${e.message ?? e.code}';
     }
   }

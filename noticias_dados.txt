@@ -1,0 +1,11 @@
+TITULO: Seleção brasileira de vôlei apresenta novos uniformes para ciclo olímpico de Los Angeles 2028 | CONTEÚDO: Placeholder: Detalhes sobre a apresentação dos novos uniformes da seleção de vôlei e as expectativas para o ciclo olímpico. | IMAGEM: images/uniformeNovo.jpg
+
+TITULO: Liga das Nações: Zé Roberto incrementa seleção com novos talentos em busca de título inédito | CONTEÚDO: Placeholder: Análise das mudanças táticas e a inclusão de novos talentos por Zé Roberto Guimarães na seleção feminina para a Liga das Nações. | IMAGEM: images/ze-roberto-guimaraes.webp
+
+TITULO: Renovação oficialmente iniciada na seleção masculina volei | CONTEÚDO: Placeholder: Informações sobre o início da renovação na equipe masculina e o planejamento para os próximos campeonatos. | IMAGEM: images/brasil-tempo-bernardinho.jpg
+
+TITULO: Brasil inicia ciclo sem Carol, com nova líbero e algumas disputas | CONTEÚDO: Placeholder: Discussão sobre a ausência da jogadora Carol e a busca por uma nova líbero, além de outras disputas por posição na equipe. | IMAGEM: images/carol.jpg
+
+TITULO: Liga das Nações terá duas equipes a mais por naipe em 2025 | CONTEÚDO: Placeholder: Detalhes sobre a expansão da Liga das Nações de Vôlei, incluindo o aumento no número de equipes participantes. | IMAGEM: images/vnl.jpg
+
+TITULO: Tabela da Liga das Nações de Vôlei (VNL) Feminino 2025 | CONTEÚDO: Placeholder: Informações completas sobre a tabela de jogos e datas da Liga das Nações Feminina de 2025. | IMAGEM: images/capavnl.jpg

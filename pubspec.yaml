@@ -36,9 +36,11 @@ dependencies:
   cupertino_icons: ^1.0.8
   firebase_core: ^3.13.1
   firebase_auth: ^5.5.4
+  firebase_storage: ^12.4.10
   cloud_firestore: ^5.6.8
   google_sign_in: ^6.3.0
   flutter_svg: ^2.0.9
+  image_picker: ^1.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -60,9 +62,6 @@ flutter:
   assets:
     - assets/images/
     - assets/SvgPicture/
-  
-
-   
 
   fonts:
     - family: BebasNeue

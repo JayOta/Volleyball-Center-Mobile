@@ -1,11 +1,9 @@
+// Importe a classe AuthService
 import 'package:flutter/material.dart';
-import 'package:volleyball_center_mobile/loja.dart';
 import 'package:volleyball_center_mobile/main.dart';
-import 'package:volleyball_center_mobile/menuBar.dart';
-import 'package:volleyball_center_mobile/fundamentos.dart';
-import 'package:volleyball_center_mobile/noticias.dart';
 import 'package:volleyball_center_mobile/editar_perfil.dart';
 import 'package:volleyball_center_mobile/utils/user_utils.dart';
+import 'package:volleyball_center_mobile/services/auth_service.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({super.key});
@@ -15,7 +13,7 @@ class Perfil extends StatefulWidget {
 }
 
 class _PerfilState extends State<Perfil> {
-  int _selectedIndex = 4;
+  final AuthService _authService = AuthService();
 
   String nome = "Carregando...";
   String email = "carregando@email.com";
@@ -36,35 +34,12 @@ class _PerfilState extends State<Perfil> {
     }
   }
 
-  void _onItemSelected(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  Widget _buildBody() {
-    switch (_selectedIndex) {
-      case 0:
-        return Fundamentos();
-      case 1:
-        return Noticias();
-      case 2:
-        return HomePage();
-      case 3:
-        return Loja();
-      case 4:
-        return bodyContent(context);
-      default:
-        return HomePage();
-    }
-  }
+  // 🔥 REMOVIDA LÓGICA DE NAVEGAÇÃO INTERNA
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: MenuBarFile(onItemSelected: _onItemSelected),
-      body: _buildBody(),
-    );
+    // 🔥 RETORNA APENAS O CONTEÚDO, SEM SCAFFOLD
+    return bodyContent(context);
   }
 
   Widget bodyContent(BuildContext context) {
@@ -72,6 +47,7 @@ class _PerfilState extends State<Perfil> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          // Conteúdo do Perfil (reintroduzido)
           const SizedBox(height: 80),
           Center(
             child: SizedBox(
@@ -138,8 +114,8 @@ class _PerfilState extends State<Perfil> {
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 150, vertical: 20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -150,15 +126,16 @@ class _PerfilState extends State<Perfil> {
                 // Botão Configurações
                 ElevatedButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.settings, color: Colors.black, size: 28),
+                  icon:
+                      const Icon(Icons.settings, color: Colors.black, size: 28),
                   label: const Text(
                     "Configurações",
                     style: TextStyle(color: Colors.black, fontSize: 20),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 110, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 110, vertical: 20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -169,15 +146,16 @@ class _PerfilState extends State<Perfil> {
                 // Botão Carrinho
                 ElevatedButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.shopping_cart, color: Colors.black, size: 28),
+                  icon: const Icon(Icons.shopping_cart,
+                      color: Colors.black, size: 28),
                   label: const Text(
                     "Carrinho de compras",
                     style: TextStyle(color: Colors.black, fontSize: 20),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 80, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80, vertical: 20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -189,9 +167,26 @@ class _PerfilState extends State<Perfil> {
 
           const SizedBox(height: 50),
 
-          // Botão Logout
+          // Botão Logout (Com a função de logout)
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () async {
+              try {
+                // Chama o método de logout
+                await _authService.signOut();
+                print("Logout realizado com sucesso!");
+
+                // Redireciona para o MyApp/AppWidget (e limpa o histórico)
+                if (mounted) {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => MyApp()),
+                    (Route<dynamic> route) => false,
+                  );
+                }
+              } catch (e) {
+                print("Erro ao fazer logout: $e");
+                // Opcional: Mostrar um SnackBar de erro
+              }
+            },
             icon: const Icon(Icons.logout, color: Colors.black),
             label: const Text(
               "Logout",
@@ -205,6 +200,7 @@ class _PerfilState extends State<Perfil> {
               ),
             ),
           ),
+          const SizedBox(height: 40), // Adiciona um espaço extra no final
         ],
       ),
     );
