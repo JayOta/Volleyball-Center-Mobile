@@ -3,6 +3,7 @@ import 'package:volleyball_center_mobile/navbaradmin.dart';
 // ATUALIZADO: Importando das novas localizações
 import 'package:volleyball_center_mobile/pages/admin/admin_news_view.dart';
 import 'package:volleyball_center_mobile/pages/admin/admin_users_view.dart';
+import 'package:volleyball_center_mobile/pages/admin/admin_products_view.dart';
 
 class Admin extends StatefulWidget {
   const Admin({super.key});
@@ -27,6 +28,8 @@ class _AdminState extends State<Admin> {
         return const AdminNewsView(); // Tela de Notícias (CRUD)
       case 1:
         return const AdminUsersView(); // Tela de Usuários (Listagem)
+      case 2:
+        return const AdminProductsView(); // 🔥 NOVO: Tela de Produtos (CRUD)
       default:
         return const Center(child: Text('Erro: Página não encontrada'));
     }
@@ -46,6 +49,9 @@ class _AdminState extends State<Admin> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Notícias'),
           BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Usuários'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag),
+              label: 'Produtos'), // 🔥 NOVO Item
         ],
       ),
     );

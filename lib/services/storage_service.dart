@@ -1,6 +1,5 @@
 // lib/services/storage_service.dart (ATUALIZADO)
 
-import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 // Importa o XFile, que é a classe de arquivo do image_picker
 import 'package:image_picker/image_picker.dart';

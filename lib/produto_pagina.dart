@@ -1,12 +1,8 @@
+// produto_pagina.dart
+
 import 'package:flutter/material.dart';
-import 'package:volleyball_center_mobile/fundamentos.dart';
-import 'package:volleyball_center_mobile/loja.dart';
-import 'package:volleyball_center_mobile/main.dart';
-import 'package:volleyball_center_mobile/menuBar.dart';
 import 'package:volleyball_center_mobile/navbar.dart';
-import 'package:volleyball_center_mobile/admin.dart';
-import 'package:volleyball_center_mobile/noticias.dart';
-import 'package:volleyball_center_mobile/perfil.dart';
+// Note que o MenuBarFile não será mais importado/usado nesta página de detalhes.
 
 class ProdutoPage extends StatefulWidget {
   final Map<String, dynamic> produto; // Dados do produto
@@ -17,198 +13,289 @@ class ProdutoPage extends StatefulWidget {
 }
 
 class _ProdutoPageState extends State<ProdutoPage> {
-  int quantidade = 0;
-  String? tamanhoSelecionado;
-  int _selectedIndex = 5;
+  static const Color primaryColor = Color(0xFF14276B); // Azul Marinho
 
-  void _onItemSelected(int index) {
-    if (index == 4) {
-      // índice 4 é o botão perfil
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Perfil()),
-      );
-    } else {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
+  int quantidade = 1;
+  String? tamanhoSelecionado;
 
   @override
   Widget build(BuildContext context) {
-    final produto = widget.produto;
-
-    Widget _buildBody(int index) {
-      switch (index) {
-        case 0:
-          return Fundamentos();
-        case 1:
-          return Noticias();
-        case 2:
-          return HomePage();
-        case 3:
-          return Loja();
-        case 4:
-          return Perfil();
-        default:
-          return bodyContent();
-      }
-    }
-
     return Scaffold(
+      // ⭐️ MANTÉM A NAVBAR: O botão de "Voltar" nativo funciona
       appBar: const Navbar(),
-      body: _buildBody(_selectedIndex),
-      bottomNavigationBar: MenuBarFile(onItemSelected: _onItemSelected),
+      // ⭐️ BODY: Exibe o conteúdo do produto
+      body: _bodyContent(),
+      // ❌ REMOVIDO: O MenuBarFile não deve existir em uma página de detalhes,
+      // pois interfere na navegação e causa a não funcionalidade em outras telas.
+      // bottomNavigationBar: MenuBarFile(...)
     );
   }
 
-  Widget bodyContent() {
+  Widget _bodyContent() {
     final produto = widget.produto;
+    // ATENÇÃO: Verifique no Firestore se o campo é 'description' ou 'descricao'
+    // Se for 'descricao', mude a linha abaixo de volta.
+    final String descricao =
+        produto['description'] ?? 'Sem descrição detalhada.';
+    final int categoriaId = produto['categorias_id'] ?? 0;
+
+    // Mapeamento simples de categoria para exibição
+    String categoriaTexto;
+    switch (categoriaId) {
+      case 0:
+        categoriaTexto = 'Bola/Objeto Principal';
+        break;
+      case 1:
+        categoriaTexto = 'Calçado';
+        break;
+      case 2:
+        categoriaTexto = 'Acessório de Proteção';
+        break;
+      case 3:
+        categoriaTexto = 'Acessório Esportivo';
+        break;
+      case 4:
+        categoriaTexto = 'Vestuário';
+        break;
+      case 5:
+        categoriaTexto = 'Equipamento/Placar';
+        break;
+      default:
+        categoriaTexto = 'Outros';
+    }
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 15),
-          Text(
-            'Produtos de Edição Limitada Verão',
-            style: TextStyle(color: Color(0xFF14276B), fontSize: 25),
-          ),
-          SizedBox(height: 50),
-          Row(
-            children: [
-              Text(produto['nome'], style: const TextStyle(fontSize: 40)),
-            ],
-          ),
-          Row(
-            children: [
-              Text(
-                "Tenis (categoria)",
-                style: TextStyle(fontSize: 15),
-              ),
-            ],
-          ),
+          // 1. Título de Destaque (Topo) - REMOVIDO, pois o nome e a imagem já falam por si.
+          // const Text(
+          //   'Produtos em Destaque',
+          //   style: TextStyle(
+          //       color: primaryColor, fontSize: 18, fontWeight: FontWeight.w600),
+          // ),
+          // const SizedBox(height: 10), // Reduzido o espaço vertical
 
-          SizedBox(height: 10),
+          // 2. Imagem Principal
+          Container(
+            height: 300,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: produto['image_url'] != null &&
+                      (produto['image_url'] as String).startsWith('http')
+                  ? Image.network(
+                      produto['image_url'],
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                      errorBuilder: (context, error, stackTrace) =>
+                          const Center(
+                              child: Icon(Icons.error,
+                                  size: 50, color: Colors.red)),
+                    )
+                  : Image.asset(
+                      produto['imagem'] ?? 'assets/images/placeholder.jpg',
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) =>
+                          const Center(
+                              child: Icon(Icons.image_not_supported, size: 50)),
+                    ),
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // 3. Nome do Produto e Categoria
+          Text(
+            produto['name'] ?? 'Produto Sem Nome',
+            style: const TextStyle(
+                fontSize: 30, fontWeight: FontWeight.bold, color: primaryColor),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            categoriaTexto,
+            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+          ),
+          const SizedBox(height: 15),
+
+          // 4. Preço
+          Text(
+            produto['preco'] ?? 'R\$ --',
+            style: const TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.w900,
+              color: Color.fromARGB(255, 33, 150, 83),
+            ),
+          ),
+          const SizedBox(height: 30),
+
+          // 5. Opções de Tamanho
+          if (categoriaId != 0)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Selecione o Tamanho:',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: _buildTamanhos(categoriaId),
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
+
+          // 6. Contador de Quantidade
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                produto['preco'],
-                style: const TextStyle(
-                  fontSize: 24,
+              const Text(
+                'Quantidade:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.remove, size: 20),
+                      onPressed: () {
+                        setState(() {
+                          if (quantidade > 1) quantidade--;
+                        });
+                      },
+                    ),
+                    Text(
+                      '$quantidade',
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.add, size: 20),
+                      onPressed: () {
+                        setState(() {
+                          quantidade++;
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          SizedBox(
-            height: 40,
-          ),
-          Image.asset(produto['imagem'],
-              width: double.infinity, fit: BoxFit.cover),
-          const SizedBox(height: 20),
+          const SizedBox(height: 40),
 
-          SizedBox(height: 30),
-          Row(children: [
-            // Deixar o Texto encima dos tmamanhos
-            // Tamanhos
-            Text('Tamanhos', style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Wrap(
-                spacing: 6,
-                runSpacing: 6,
-                children: _buildTamanhos(produto['categorias_id']),
+          // 7. Botão Adicionar ao Carrinho (Responsivo)
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                // Lógica de adição ao carrinho (Placeholder)
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text(
+                          'Produto ${produto['name']} (Qtd: $quantidade) adicionado ao carrinho!')),
+                );
+              },
+              icon: const Icon(Icons.shopping_cart),
+              label: const Text('Adicionar ao Carrinho'),
+              style: ElevatedButton.styleFrom(
+                iconColor: Colors.white,
+                foregroundColor: Colors.white,
+                backgroundColor: primaryColor,
+                padding: const EdgeInsets.symmetric(vertical: 18),
+                textStyle:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
               ),
             ),
-          ]),
-
-          const SizedBox(height: 20),
-          // Quantidade
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     IconButton(
-          //       onPressed: () {
-          //         setState(() {
-          //           if (quantidade > 0) quantidade--;
-          //         });
-          //       },
-          //       icon: const Icon(Icons.remove),
-          //     ),
-          //     Text(
-          //       '$quantidade',
-          //       style: const TextStyle(fontSize: 24),
-          //     ),
-          //     IconButton(
-          //       onPressed: () {
-          //         setState(() {
-          //           quantidade++;
-          //         });
-          //       },
-          //       icon: const Icon(Icons.add),
-          //     ),
-          //   ],
-          // ),
-          const SizedBox(height: 16),
-          ElevatedButton.icon(
-            onPressed: () {
-              // Adicionar ao carrinho
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Admin()),
-              );
-            },
-            icon: const Icon(Icons.shopping_cart),
-            label: const Text('Adicionar ao Carrinho'),
-            style: ElevatedButton.styleFrom(
-              iconColor: Color(0xFFFFFFFF),
-              foregroundColor: Color(0xFFFFFFFF),
-              backgroundColor: Color(0xFF14276b),
-              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 90),
-            ),
           ),
+
+          const SizedBox(height: 40),
+
+          // 8. Descrição do Produto
+          const Text(
+            'Detalhes do Produto',
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: primaryColor),
+          ),
+          const Divider(color: primaryColor),
+          const SizedBox(height: 10),
+          Text(
+            descricao,
+            textAlign: TextAlign.justify,
+            style: const TextStyle(fontSize: 15, height: 1.5),
+          ),
+          const SizedBox(height: 50),
         ],
       ),
     );
   }
 
+  // Métodos _buildTamanhos e _buildTamanhoButton (mantidos)
   List<Widget> _buildTamanhos(int categoriaId) {
+    List<String> sizes = [];
     if (categoriaId == 1) {
-      return ['37', '38', '39', '40', '41', '42', '43']
-          .map((size) => _buildTamanhoButton(size))
-          .toList();
+      sizes = ['37', '38', '39', '40', '41', '42', '43'];
     } else if ([2, 3, 4].contains(categoriaId)) {
-      return ['PP', 'P', 'M', 'G', 'GG']
-          .map((size) => _buildTamanhoButton(size))
-          .toList();
+      sizes = ['PP', 'P', 'M', 'G', 'GG'];
     } else {
       return [const Text('Sem tamanhos disponíveis')];
     }
+
+    return sizes.map((size) => _buildTamanhoButton(size)).toList();
   }
 
   Widget _buildTamanhoButton(String size) {
     final bool isSelected = tamanhoSelecionado == size;
-    return TextButton(
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         setState(() {
           tamanhoSelecionado = size;
         });
       },
-      style: TextButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-        backgroundColor:
-            isSelected ? Color.fromARGB(255, 37, 53, 110) : Colors.white30,
-        foregroundColor: isSelected ? Colors.white : Colors.black,
-        shape: RoundedRectangleBorder(
+      child: Container(
+        width: 60,
+        height: 40,
+        decoration: BoxDecoration(
+          color: isSelected ? primaryColor : Colors.white,
           borderRadius: BorderRadius.circular(8),
-          side: BorderSide(
-            color: isSelected
-                ? Theme.of(context).colorScheme.primary
-                : Colors.grey.shade400,
+          border: Border.all(
+            color: isSelected ? primaryColor : Colors.grey.shade400,
+            width: 2,
+          ),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          size,
+          style: TextStyle(
+            color: isSelected ? Colors.white : primaryColor,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            fontSize: 16,
           ),
         ),
       ),
-      child: Text(size),
     );
   }
 }

@@ -18,7 +18,7 @@ class EditarPerfil extends StatefulWidget {
 }
 
 class _EditarPerfilState extends State<EditarPerfil> {
-  int _selectedIndex = 4;
+  final int _selectedIndex = 4;
 
   late TextEditingController _nomeController;
   late TextEditingController _emailController;
@@ -334,7 +334,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFFFCCE00),
+                backgroundColor: const Color(0xffffcce00),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 100, vertical: 25),
                 shape: RoundedRectangleBorder(

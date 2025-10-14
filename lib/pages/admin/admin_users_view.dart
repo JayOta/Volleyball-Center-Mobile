@@ -1,4 +1,4 @@
-// lib/pages/admin/admin_users_view.dart
+// lib/pages/admin/admin_users_view.dart (FINALIZADO COM SCROLL CHECK)
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,18 +21,77 @@ class _AdminUsersViewState extends State<AdminUsersView> {
     _usersFuture = _fetchUsers();
   }
 
-  // Função para buscar a lista de usuários
   Future<List<Map<String, dynamic>>> _fetchUsers() async {
-    // Chama o método que busca todos os usuários (ativos) do Firestore
-    // Note: Ele retorna uma List<Map<String, dynamic>>
     return await _firestoreService.getAllUsers();
   }
 
-  // Função para formatar o Timestamp
+  void _refreshUsers() {
+    setState(() {
+      _usersFuture = _fetchUsers();
+    });
+  }
+
+  // Lógica de Update (Bloquear/Desbloquear)
+  Future<void> _toggleUserActiveStatus(
+      String uid, bool currentStatus, String userName) async {
+    final newStatus = !currentStatus;
+    final action = newStatus ? 'Ativado' : 'Bloqueado';
+
+    try {
+      await _firestoreService.updateUserProfile(
+        uid: uid,
+        updates: {'isActive': newStatus},
+      );
+      _refreshUsers();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Usuário $userName $action com sucesso!'),
+            backgroundColor: newStatus ? Colors.green : Colors.red.shade700,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erro ao ${action.toLowerCase()} o usuário: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  // Lógica de Delete (Soft Delete)
+  Future<void> _deleteUser(String uid, String userName) async {
+    try {
+      await _firestoreService.deleteUserProfile(uid);
+      _refreshUsers();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content:
+                Text('Usuário $userName desativado (soft delete) com sucesso!'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erro ao desativar o usuário: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   String _formatTimestamp(Timestamp? timestamp) {
     if (timestamp == null) return 'N/A';
     final date = timestamp.toDate();
-    // Formato DD/MM/AAAA
     return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
   }
 
@@ -43,16 +102,24 @@ class _AdminUsersViewState extends State<AdminUsersView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Gestão de Usuários',
-            style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF14276b)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Gestão de Usuários',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF14276b)),
+              ),
+              IconButton(
+                icon: const Icon(Icons.refresh, color: Color(0xFF14276b)),
+                onPressed: _refreshUsers,
+                tooltip: 'Recarregar Usuários',
+              ),
+            ],
           ),
           const SizedBox(height: 20),
-
-          // O FutureBuilder busca os dados e constrói a UI com base no resultado
           Expanded(
             child: FutureBuilder<List<Map<String, dynamic>>>(
               future: _usersFuture,
@@ -65,19 +132,19 @@ class _AdminUsersViewState extends State<AdminUsersView> {
                           Text('Erro ao carregar usuários: ${snapshot.error}'));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return const Center(
-                      child: Text(
-                          'Nenhum usuário encontrado (ou regras do Firestore não permitem leitura).'));
+                      child: Text('Nenhum usuário encontrado.'));
                 }
 
                 final userList = snapshot.data!;
 
                 return SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
+                  scrollDirection:
+                      Axis.vertical, // Scroll principal para as linhas
                   child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
+                    scrollDirection: Axis.horizontal, // Scroll para as colunas
                     child: DataTable(
                       headingRowColor:
-                          MaterialStateProperty.all(Colors.grey[200]),
+                          WidgetStateProperty.all(Colors.grey[200]),
                       border: TableBorder.all(color: Colors.grey.shade300),
                       columnSpacing: 20,
                       dataRowHeight: 40,
@@ -96,21 +163,20 @@ class _AdminUsersViewState extends State<AdminUsersView> {
                                 style: TextStyle(fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Ações',
-                                style: TextStyle(
-                                    fontWeight: FontWeight
-                                        .bold))), // Manteremos as ações para futura expansão (bloquear/ativar)
+                                style: TextStyle(fontWeight: FontWeight.bold))),
                       ],
                       rows: userList.map((user) {
+                        final String uid = user['uid'] as String? ?? '';
+                        final bool isActive = user['isActive'] == true;
+                        final String name =
+                            user['name'] ?? 'Usuário Desconhecido';
+
                         return DataRow(cells: [
-                          DataCell(Text(user['name'] ?? 'N/A')),
+                          DataCell(Text(name)),
                           DataCell(Text(user['email'] ?? 'N/A')),
                           DataCell(Icon(
-                            (user['isActive'] == true)
-                                ? Icons.check_circle
-                                : Icons.cancel,
-                            color: (user['isActive'] == true)
-                                ? Colors.green
-                                : Colors.red,
+                            isActive ? Icons.check_circle : Icons.cancel,
+                            color: isActive ? Colors.green : Colors.red,
                             size: 18,
                           )),
                           DataCell(Text(_formatTimestamp(
@@ -118,17 +184,35 @@ class _AdminUsersViewState extends State<AdminUsersView> {
                           DataCell(
                             Row(
                               children: [
-                                // Exemplo de botão para futura implementação de "Bloquear"
+                                // Botão de Bloqueio/Ativação
                                 IconButton(
-                                  icon: Icon(Icons.lock_open,
-                                      color: Colors.blueGrey),
-                                  tooltip: 'Bloquear/Desbloquear',
+                                  icon: Icon(
+                                    isActive ? Icons.lock : Icons.lock_open,
+                                    color: isActive
+                                        ? Colors.red.shade700
+                                        : Colors.green.shade700,
+                                  ),
+                                  tooltip: isActive
+                                      ? 'Bloquear Usuário'
+                                      : 'Ativar Usuário',
                                   onPressed: () {
-                                    // Implementação futura: _toggleUserActiveStatus(user['uid']);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text(
-                                                'Ação de Bloqueio/Ativação para o usuário ${user['name']}')));
+                                    if (uid.isNotEmpty) {
+                                      _toggleUserActiveStatus(
+                                          uid, isActive, name);
+                                    }
+                                  },
+                                ),
+                                const SizedBox(width: 8),
+
+                                // Botão de Deletar (Soft Delete)
+                                IconButton(
+                                  icon: const Icon(Icons.delete_forever,
+                                      color: Colors.orange),
+                                  tooltip: 'Desativar Usuário (Soft Delete)',
+                                  onPressed: () {
+                                    if (uid.isNotEmpty) {
+                                      _deleteUser(uid, name);
+                                    }
                                   },
                                 ),
                               ],

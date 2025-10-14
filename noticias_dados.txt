@@ -9,3 +9,69 @@ TITULO: Brasil inicia ciclo sem Carol, com nova líbero e algumas disputas | CON
 TITULO: Liga das Nações terá duas equipes a mais por naipe em 2025 | CONTEÚDO: Placeholder: Detalhes sobre a expansão da Liga das Nações de Vôlei, incluindo o aumento no número de equipes participantes. | IMAGEM: images/vnl.jpg
 
 TITULO: Tabela da Liga das Nações de Vôlei (VNL) Feminino 2025 | CONTEÚDO: Placeholder: Informações completas sobre a tabela de jogos e datas da Liga das Nações Feminina de 2025. | IMAGEM: images/capavnl.jpg
+
+--- Notícia Principal (mainCard) ---
+Título: Brasil bate Coreia do Sul e pega EUA na final do vôlei feminino!
+Imagem: https://i.imgur.com/u2gJFfL.jpeg
+
+--- Notícia 1 (Card Menor Esquerda) ---
+Título: (Não estava explícito, mas a imagem era o placeholder)
+Imagem: https://i.imgur.com/rU9O1LZ.jpeg
+
+--- Notícia 2 (Card Menor Direita) ---
+Título: (Não estava explícito, mas a imagem era o placeholder)
+Imagem: https://i.imgur.com/K2o9ZfQ.jpeg
+
+Dados Produtos:
+
+[
+  {
+    "name": "Bola de vôlei Penalty",
+    "price": 249.99,
+    "description": "A bola oficial para seus jogos e treinos, com excelente toque e durabilidade.",
+    "image_url": "assets/images/bola.jpg", 
+    "category_id": 0
+  },
+  {
+    "name": "Tênis de vôlei (Modelo Pro)",
+    "price": 299.99,
+    "description": "Tênis de alta performance com amortecimento superior para saltos e aterrissagens.",
+    "image_url": "assets/images/tenis.jpg", 
+    "category_id": 1
+  },
+  {
+    "name": "Joelheira Profissional",
+    "price": 99.99,
+    "description": "Proteção máxima com material respirável. Essencial para defesa e segurança.",
+    "image_url": "assets/images/joelheira.jpg", 
+    "category_id": 2
+  },
+  {
+    "name": "Manguito de Vôlei UV",
+    "price": 39.99,
+    "description": "Compressão e proteção solar para os braços, melhorando a circulação e o controle.",
+    "image_url": "assets/images/manguito.jpg", 
+    "category_id": 3
+  },
+  {
+    "name": "Meias Esportivas Antiderrapantes",
+    "price": 29.99,
+    "description": "Meias com tecnologia antiderrapante para maior estabilidade durante movimentos rápidos.",
+    "image_url": "assets/images/meias.jpg", 
+    "category_id": 3
+  },
+  {
+    "name": "Marcador de Pontos Digital",
+    "price": 99.99,
+    "description": "Placar manual para controle rápido de pontos e sets.",
+    "image_url": "assets/images/placar.jpg", 
+    "category_id": 5
+  },
+  {
+    "name": "Faixa de Cabelo Esportiva",
+    "price": 29.99,
+    "description": "Faixa de alta absorção para manter o suor longe dos olhos.",
+    "image_url": "assets/images/faixa.jpg", 
+    "category_id": 3
+  }
+]

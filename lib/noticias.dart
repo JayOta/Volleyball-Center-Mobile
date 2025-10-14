@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:volleyball_center_mobile/navbar.dart';
 import 'package:volleyball_center_mobile/services/firestore_service.dart';
 import 'package:volleyball_center_mobile/models/news.dart';
 
