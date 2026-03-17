@@ -1,5 +1,20 @@
 # VOLLEYBALL CENTER MOBILE - Projeto Integrador
 ## Aplicativo de vôlei construído por um grupo do 3º Ano do Ensino Médio - Sesc/Senac 2025
+
+<div style="display: flex">
+<img src="./print_1.jpg" width="200px">
+<img src="./print_2.jpg" width="200px">
+<img src="./print_3.jpg" width="200px">
+<img src="./print_4.jpg" width="200px">
+</div>
+<div style="height:15px"></div>
+<div style="display: flex">
+<img src="./print_5.jpg" width="200px">
+<img src="./print_6.jpg" width="200px">
+<img src="./print_7.jpg" width="200px">
+<img src="./print_8.jpg" width="200px">
+</div>
+
 <br/>
 <h2>Objetivo</h2>
 <p>Um aplicativo de vôlei feito para a região do Paraná, com dicas para iniciantes, e notícias para os interessados, oferecendo uma melhor experiência para quem deseja aprender mais sobre o esporte e sentir-se mais informado, aprofundando-se no mundo do volêi de uma forma mais dinâmica.</p>
