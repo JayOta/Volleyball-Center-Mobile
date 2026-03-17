@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:volleyball_center_mobile/historia.dart';
 import 'package:volleyball_center_mobile/regras.dart';
 import 'package:volleyball_center_mobile/rodizios.dart';
+import 'package:url_launcher/link.dart';
 
 class Fundamentos extends StatefulWidget {
   const Fundamentos({super.key});
@@ -128,6 +129,27 @@ class _FundamentosState extends State<Fundamentos> {
                 "A recepção, ou passe, é uma técnica defensiva que visa receber o saque do adversário ou uma bola vinda da quadra contrária e passá-la para um companheiro, geralmente o levantador, para iniciar a jogada ofensiva.",
             imagePath: 'assets/images/recepcao.jpg',
             isImageLeft: false, // Imagem à direita
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: Link(
+              uri: Uri.parse('https://volleyballcenter.infinityfreeapp.com/'),
+              builder:
+                  (BuildContext context, Future<void> Function()? followLink) {
+                return ElevatedButton(
+                  onPressed: followLink,
+                  child: const Text(
+                    'Visite nosso site!',
+                    style: TextStyle(color: Color(0xFF14276b)),
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(
+            height: 10,
           ),
         ],
       ),

@@ -13,6 +13,8 @@ import 'package:volleyball_center_mobile/services/firestore_service.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'perfil.dart';
+import 'package:url_launcher/link.dart';
+// Renamed to avoid conflict with the standard dart:io Link class if imported
 
 // 🔥 Importações necessárias para o Firebase
 import 'package:volleyball_center_mobile/models/news.dart'; // Garanta que este modelo existe
@@ -30,7 +32,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -327,6 +329,24 @@ class _HomePageState extends State<HomePage> {
                     _buildExtraNewsGrid(context, extraNews),
 
                   const SizedBox(height: 10),
+
+                  Center(
+                    child: Link(
+                      uri: Uri.parse(
+                          'https://volleyballcenter.infinityfreeapp.com/'),
+                      builder: (BuildContext context,
+                          Future<void> Function()? followLink) {
+                        return ElevatedButton(
+                          onPressed: followLink,
+                          child: const Text(
+                            'Visite nosso site!',
+                            style: TextStyle(color: Color(0xFF14276b)),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                 ],
               );
             },

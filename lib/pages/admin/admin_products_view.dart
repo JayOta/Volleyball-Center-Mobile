@@ -86,7 +86,9 @@ class _AdminProductsViewState extends State<AdminProductsView> {
                       foregroundColor: Colors.white),
                   onPressed: () async {
                     if (nameController.text.isEmpty ||
-                        priceController.text.isEmpty) return;
+                        priceController.text.isEmpty) {
+                      return;
+                    }
 
                     final Map<String, dynamic> data = {
                       'nome': nameController.text.trim(),

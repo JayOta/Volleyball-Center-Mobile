@@ -87,7 +87,7 @@ class _RodiziosState extends State<Rodizios> {
                   rotation["imagem"]!,
                 ),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
