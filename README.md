@@ -1,5 +1,5 @@
-# VOLLEYBALL CENTER MOBILE - Projeto Integrador
-## Aplicativo de vôlei construído por um grupo do 3º Ano do Ensino Médio - Sesc/Senac 2025
+# VOLLEYBALL CENTER MOBILE - Capstone Project
+## Volleyball App built by a group of 12th-grade students - Sesc/Senac 2025
 
 <div style="display: flex">
 <img src="./print_1.jpg" width="200px">
@@ -16,16 +16,16 @@
 </div>
 
 <br/>
-<h2>Objetivo</h2>
-<p>Um aplicativo de vôlei feito para a região do Paraná, com dicas para iniciantes, e notícias para os interessados, oferecendo uma melhor experiência para quem deseja aprender mais sobre o esporte e sentir-se mais informado, aprofundando-se no mundo do volêi de uma forma mais dinâmica.</p>
-<h2>Feito com: </h2>
+<h2>Objective</h2>
+<p>A volleyball app created for the Paraná region (Brazil), featuring tips for beginners and news for enthusiasts. It offers an enhanced experience for those wanting to learn more about the sport and stay informed, diving into the world of volleyball in a more dynamic way.</p>
+<h2>Built with: </h2>
 <ul>
   <li>FLUTTER</li>
   <li>DART</li>
   <li>FIREBASE</li>
 </ul>
 
-<h2>Participantes: </h2>
+<h2>Contributors: </h2>
 <ul>
   <li><a href="https://github.com/JayOta">JayOta</a></li>
   <li><a href="https://github.com/anarara">anarara</a></li>
@@ -35,4 +35,4 @@
   <li><a href="https://github.com/euricoinf">Eurico Junior Tozzo</a></li>
 </ul>
 <br/>
-<h4>Visite também nosso site:</h4> <a target="_blank" href="http://volleyballcenter.infinityfreeapp.com/Routes/index.php">http://volleyballcenter.infinityfreeapp.com</a>
+<h4>Also visit our website:</h4> <a target="_blank" href="http://volleyballcenter.infinityfreeapp.com/Routes/index.php">http://volleyballcenter.infinityfreeapp.com</a>
